@@ -1,0 +1,41 @@
+@model IEnumerable<SmartNZHealth.Models.Case>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CaseDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Prescription)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CaseDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Prescription)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.CaseID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.CaseID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.CaseID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,30 @@
+@model SmartNZHealth.Models.Case
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Case</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CaseDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CaseDescription)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Prescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Prescription)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.CaseID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

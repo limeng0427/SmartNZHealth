@@ -67,5 +67,18 @@
                     </form>
                 }*@
         </dd>
+        <dt>HealthRole:</dt>
+        <dd>
+            @if (Model.HealthRole != null)
+            {
+
+                <p>@Model.HealthRole</p>
+            }
+            else
+            {
+                <p>No Role Provided!</p>
+            }
+        </dd>
+
     </dl>
 </div>

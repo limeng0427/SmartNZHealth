@@ -14,6 +14,8 @@ namespace SmartNZHealth.Models.ManageViewModels
 
         public string PhoneNumber { get; set; }
 
+        public string HealthRole { get; set; }
+
         public bool TwoFactor { get; set; }
 
         public bool BrowserRemembered { get; set; }
