@@ -38,10 +38,10 @@ namespace SmartNZHealth.Services
                 client.AuthenticationMechanisms.Remove("XOAUTH2");
 
                 // Note: only needed if the SMTP server requires authentication
-                client.Authenticate("lim92@myunitec.ac.nz", "*****");
+                //client.Authenticate("lim92@myunitec.ac.nz", "****");
 
-                client.Send(mes);
-                client.Disconnect(true);
+                //client.Send(mes);
+                //client.Disconnect(true);
             }
 
             // Plug in your email service here to send an email.

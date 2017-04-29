@@ -45,17 +45,17 @@ namespace SmartNZHealth
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>(config =>
-            {
-                config.SignIn.RequireConfirmedEmail = true;
-            })
-            .AddEntityFrameworkStores<ApplicationDbContext>()
-             .AddDefaultTokenProviders();
+            //services.AddIdentity<ApplicationUser, IdentityRole>(config =>
+            //{
+            //    config.SignIn.RequireConfirmedEmail = true;
+            //})
+            //.AddEntityFrameworkStores<ApplicationDbContext>()
+            // .AddDefaultTokenProviders();
 
 
-            //services.AddIdentity<ApplicationUser, IdentityRole>()
-            //    .AddEntityFrameworkStores<ApplicationDbContext>()
-            //    .AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             services.AddMvc();
 
