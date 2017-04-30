@@ -1,0 +1,4 @@
+.vs/
+src/SmartNZHealth/bin/
+src/SmartNZHealth/obj/
+src/project.lock.json
