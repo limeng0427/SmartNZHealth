@@ -2,20 +2,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SmartNZHealth.Data;
 using SmartNZHealth.Models;
+using SmartNZHealth.Models.CaseViewModels;
 
 namespace SmartNZHealth.Controllers
 {
     public class CasesController : Controller
     {
-        private readonly HealthContext _context;
+        private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
 
-        public CasesController(HealthContext context)
+        public CasesController(
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            ApplicationDbContext context)
         {
+            _userManager = userManager;
+            _signInManager = signInManager;
             _context = context;    
         }
 
@@ -26,25 +36,58 @@ namespace SmartNZHealth.Controllers
         }
 
         // GET: Cases/Details/5
-        public async Task<IActionResult> Details(int? id)
+        [Authorize(Roles = "Doctor, Patient")]
+        public IActionResult Details(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var @case = await _context.Cases.SingleOrDefaultAsync(m => m.CaseID == id);
-            if (@case == null)
+            var user = _context.Users.Where(u => u.Id == id).Include(u => u.Cases).AsNoTracking().Single();
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return View(@case);
+            List<ApplicationUser> doctors = new List<ApplicationUser>();
+            foreach (var _case in user.Cases)
+            {
+                var doctor = _context.Users.Where(u => u.Id == _case.DoctorId).AsNoTracking().Single();
+                doctors.Add(doctor);
+            }
+            ViewBag.Doctors = doctors;
+
+            return View(user);
         }
 
         // GET: Cases/Create
-        public IActionResult Create()
+        public IActionResult Create(string id)
         {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = _context.Users.Where(u => u.Id == id).Include(u => u.Cases).AsNoTracking().Single();
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            //List<ApplicationUser> doctors = new List<ApplicationUser>();
+            //foreach (var _case in user.Cases)
+            //{
+            //    var doctor = _context.Users.Where(u => u.Id == _case.DoctorId).AsNoTracking().Single();
+            //    doctors.Add(doctor);
+            //}
+
+            ViewBag.User = user;
+            //ViewBag.Doctors = doctors;
+            //CreateViewModel temp = new CreateViewModel {
+            //    User = user
+            //};
+
             return View();
         }
 
@@ -53,13 +96,27 @@ namespace SmartNZHealth.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CaseID,CaseDescription,Prescription")] Case @case)
+        public async Task<IActionResult> Create([Bind("ConsultationDate, CaseDescription, Prescription")] Case @case, string Id, string DoctorId)
         {
+            if (Id == null)
+            {
+                return NotFound();
+            }
+
+            var user = _context.Users.Where(u => u.Id == Id).Single();
+            if (user == null)
+            {
+                return NotFound();
+            }
+
             if (ModelState.IsValid)
             {
+                @case.PatientId = Id;
+                @case.Patient = user;
+                @case.DoctorId = DoctorId;
                 _context.Add(@case);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { id = user.Id });
             }
             return View(@case);
         }

@@ -22,7 +22,7 @@ namespace SmartNZHealth.Controllers
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "If you have any problem, please feel free to contact us.";
 
             return View();
         }

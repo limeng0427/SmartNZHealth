@@ -23,6 +23,11 @@ namespace SmartNZHealth.Data
             // Add your customizations after calling base.OnModelCreating(builder);
         }
 
-        public DbSet<ApplicationUser> ApplicationUser { get; set; }
+        //public DbSet<Administrator> Administrators { get; set; }
+        //public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<ApplicationUser> Patients { get; set; }
+        public DbSet<Case> Cases { get; set; }
+        //public DbSet<ApplicationUser> ApplicationUser { get; set; }
+        //public DbSet<PatientRecord> PatientRecords { get; set; }
     }
 }

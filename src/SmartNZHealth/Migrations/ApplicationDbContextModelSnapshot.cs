@@ -129,6 +129,10 @@ namespace SmartNZHealth.Migrations
 
                     b.Property<int>("AccessFailedCount");
 
+                    b.Property<string>("Address");
+
+                    b.Property<DateTime>("Birthday");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken();
 
@@ -137,11 +141,21 @@ namespace SmartNZHealth.Migrations
 
                     b.Property<bool>("EmailConfirmed");
 
-                    b.Property<string>("HealthRole");
+                    b.Property<string>("EmergencyContactName");
+
+                    b.Property<string>("EmergencyContactPhone");
+
+                    b.Property<bool>("Enabled");
+
+                    b.Property<string>("FirstName");
+
+                    b.Property<string>("LastName");
 
                     b.Property<bool>("LockoutEnabled");
 
                     b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("Mobile");
 
                     b.Property<string>("NormalizedEmail")
                         .HasAnnotation("MaxLength", 256);
@@ -156,6 +170,8 @@ namespace SmartNZHealth.Migrations
                     b.Property<bool>("PhoneNumberConfirmed");
 
                     b.Property<string>("SecurityStamp");
+
+                    b.Property<int>("Sex");
 
                     b.Property<bool>("TwoFactorEnabled");
 
@@ -172,6 +188,28 @@ namespace SmartNZHealth.Migrations
                         .HasName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("SmartNZHealth.Models.Case", b =>
+                {
+                    b.Property<int>("CaseID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CaseDescription");
+
+                    b.Property<DateTime>("ConsultationDate");
+
+                    b.Property<string>("DoctorId");
+
+                    b.Property<string>("PatientId");
+
+                    b.Property<string>("Prescription");
+
+                    b.HasKey("CaseID");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("Cases");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityRoleClaim<string>", b =>
@@ -209,6 +247,13 @@ namespace SmartNZHealth.Migrations
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SmartNZHealth.Models.Case", b =>
+                {
+                    b.HasOne("SmartNZHealth.Models.ApplicationUser", "Patient")
+                        .WithMany("Cases")
+                        .HasForeignKey("PatientId");
                 });
         }
     }

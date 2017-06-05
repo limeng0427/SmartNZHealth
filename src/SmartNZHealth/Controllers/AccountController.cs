@@ -5,9 +5,12 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using SmartNZHealth.Data;
 using SmartNZHealth.Models;
 using SmartNZHealth.Models.AccountViewModels;
 using SmartNZHealth.Services;
@@ -57,6 +60,22 @@ namespace SmartNZHealth.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                if (user != null)
+                {
+                    if (user.Enabled == false)
+                    {
+                        ModelState.AddModelError(string.Empty, "Your Account is currently Disabled, please consult the Administrator.");
+                        return View(model);
+                    }
+
+                    //if (!await _userManager.IsEmailConfirmedAsync(user))
+                    //{
+                    //    ModelState.AddModelError(string.Empty,
+                    //                  "You must have a confirmed email to log in.");
+                    //    return View(model);
+                    //}
+                }
 
                 // Require the user to have a confirmed email before they can log on.
                 //var user = await _userManager.FindByEmailAsync(model.Email);
@@ -119,8 +138,10 @@ namespace SmartNZHealth.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email ,
-                    HealthRole =model.HealthRole
+                var user = new ApplicationUser
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 //await _userManager.AddToRoleAsync(user, "Member");

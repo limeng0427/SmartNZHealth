@@ -39,7 +39,9 @@
         <div class="form-group">
             <label asp-for="Birthday" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Birthday" class="form-control" />
+                <input asp-for="Birthday" class="form-control" type="date" 
+                       data-val="true" data-val-required="The Birthday field is required."
+                        id="Birthday" name="Birthday" value=""/>
                 <span asp-validation-for="Birthday" class="text-danger" />
             </div>
         </div>
