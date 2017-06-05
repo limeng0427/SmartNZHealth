@@ -8,8 +8,8 @@ using SmartNZHealth.Data;
 namespace SmartNZHealth.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20170603095114_Update2")]
-    partial class Update2
+    [Migration("20170605101217_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -196,17 +196,19 @@ namespace SmartNZHealth.Migrations
                     b.Property<int>("CaseID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("ApplicationUserId");
-
                     b.Property<string>("CaseDescription");
 
                     b.Property<DateTime>("ConsultationDate");
+
+                    b.Property<string>("DoctorId");
+
+                    b.Property<string>("PatientId");
 
                     b.Property<string>("Prescription");
 
                     b.HasKey("CaseID");
 
-                    b.HasIndex("ApplicationUserId");
+                    b.HasIndex("PatientId");
 
                     b.ToTable("Cases");
                 });
@@ -250,9 +252,9 @@ namespace SmartNZHealth.Migrations
 
             modelBuilder.Entity("SmartNZHealth.Models.Case", b =>
                 {
-                    b.HasOne("SmartNZHealth.Models.ApplicationUser", "ApplicationUser")
+                    b.HasOne("SmartNZHealth.Models.ApplicationUser", "Patient")
                         .WithMany("Cases")
-                        .HasForeignKey("ApplicationUserId");
+                        .HasForeignKey("PatientId");
                 });
         }
     }
