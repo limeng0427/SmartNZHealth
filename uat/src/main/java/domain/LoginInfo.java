@@ -1,13 +1,10 @@
 package domain;
 
-import javax.validation.constraints.NotNull;
 
 public class LoginInfo {
 
-    @NotNull
     private String email;
 
-    @NotNull
     private String password;
 
     public String getEmail() {

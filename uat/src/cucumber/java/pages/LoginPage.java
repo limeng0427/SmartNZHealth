@@ -10,10 +10,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPage {
-    @FindBy(id = "email")
+    @FindBy(id = "Email")
     public WebElement emailElement;
 
-    @FindBy(id = "password")
+    @FindBy(id = "Password")
     public WebElement passwordElement;
 
     private final WebDriver driver;
@@ -24,7 +24,7 @@ public class LoginPage {
     }
 
     public void login(String email, String password) {
-        driver.get("http://localhost:8080/cloudproject/login");
+        driver.get("http://dochyper.unitec.ac.nz/lim92/asp_practical/Account/Login");
         emailElement.sendKeys(email);
         passwordElement.sendKeys(password);
         passwordElement.submit();
@@ -33,17 +33,17 @@ public class LoginPage {
     public boolean errorMessageExists() {
         WebDriverWait wait = new WebDriverWait(driver, 5);
         try {
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("error")));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("validation-summary-errors")));
             return true;
         } catch (TimeoutException e) {
             return false;
         }
     }
 
-    public boolean allUsersPageShows() {
+    public boolean greetingMessageIsDisplayed(String gteetings) {
         WebDriverWait wait = new WebDriverWait(driver, 5);
         try {
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("all_users_table")));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.linkText(gteetings)));
             return true;
         } catch (TimeoutException e) {
             return false;

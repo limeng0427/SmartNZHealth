@@ -4,26 +4,23 @@ Feature: Register to system
 
     Background:
         Given There are following users in the system:
-            | user name      | email          | password         | user type |
-            | Great Doctor   | gd@snzh.org.nz | Abcd@1234        | doctor    |
-            | Little Issue   | li@snzh.org.nz | LittleIssue@1234 | patient   |
+            | user name | email                        | password        | user type |
+            | Admin A   | admin@smartnzhealth.co.nz    | P@ssw0rd        | Admin     |
+            | Doctor D  | doctor1@smartnzhealth.co.nz  | doctor1@UNITEC  | Doctor    |
+            | Patient A | patient1@smartnzhealth.co.nz | patient1@UNITEC | Patient   |
+            | Patient B | patient2@smartnzhealth.co.nz | patient2@UNITEC | Patient   |
 
     @Positive
-    Scenario Outline: register succesfully with correct user and password
-        When I register with email "<email>", password "<password>" and confirming password "<confirmPassword>"
+    Scenario: register as patient succesfully with enough correct information
+        When I register with the following information:
+            | email          | password         | first name | last name  | gender | birth date | mobile     | emergency contact number | emergency contact person |
+            | ln@snzh.org.nz | LittleIssue@1234 | Little     | Issue      | Male   | 01/03/1970 | 0210230234 | 02101110111              | Big Issue                |
         Then Register successful page should show.
 
-        Examples:
-            | user name      | email          | password         | user type | confirmPassword  |
-            | Awesome Admin  | aa@snzh.org.nz | aswesome@        | adin      | aswesome@        |
-            | Lazy Nobody    | ln@snzh.org.nz | LittleIssue@1234 | patient   | LittleIssue@1234 |
 
     @Negative
     Scenario: cannot register existing user
-            When I register with email "gd@snzh.org.nz", password "Abcd@1234" and confirming password "Abcd@1234"
-            Then An register fail message should be displayed.
-
-    @Negative
-    Scenario: cannot register if password does not match confirming password
-            When I register with email "new@snzh.org.nz", password "Abcd@1234" and confirming password "notTheSame"
-            Then An register fail message should be displayed.
+        When I register with the following information:
+            | email                        | password         | first name | last name  | gender | birth date | mobile     | emergency contact number | emergency contact person |
+            | patient1@smartnzhealth.co.nz | LittleIssue@1234 | Little     | Issue      | Male   | 01/03/1970 | 0210230234 | 02101110111              | Big Issue                |
+        Then An register fail message should be displayed.

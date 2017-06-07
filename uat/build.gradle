@@ -1,11 +1,8 @@
 plugins {
-  id "org.akhikhl.gretty" version "1.2.4"
   id "com.github.samueltbrown.cucumber" version "0.9"
 }
 
-apply plugin: 'war'
 apply plugin: 'eclipse'
-
 
 repositories {
    mavenCentral()
@@ -14,31 +11,26 @@ repositories {
 
 cucumber {
     formats = ['pretty', 'html:out']
- //   tags = ['@Register', '@Negative']
+    tags = ['@Register']
 }
 
 
 dependencies {
-    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
-    compile "org.apache.pdfbox:pdfbox:1.8.10"
-    compile "org.apache.pdfbox:fontbox:1.8.10"
-    compile 'org.springframework:spring-web:4.2.5.RELEASE'
-    compile 'org.springframework:spring-webmvc:4.2.5.RELEASE'
-    compile 'org.hibernate:hibernate-validator:5.2.4.Final'
-    compile 'org.hibernate:hibernate-validator-cdi:5.2.4.Final'
     cucumberRuntime 'info.cukes:cucumber-groovy:1.2.2'
     compile 'info.cukes:cucumber-groovy:1.2.2'
     compile 'info.cukes:cucumber-java:1.2.2'
+
     cucumberRuntime 'org.codehaus.groovy:groovy-all:2.2.1'
+
     cucumberRuntime 'org.seleniumhq.selenium:selenium-java:3.4.0'
     compile 'org.seleniumhq.selenium:selenium-java:3.4.0'
+
+    cucumberRuntime 'org.seleniumhq.selenium:selenium-server:3.4.0'
+    compile 'org.seleniumhq.selenium:selenium-server:3.4.0'
+
     cucumberRuntime 'org.picocontainer:picocontainer:2.14.2'
     cucumberRuntime 'info.cukes:cucumber-picocontainer:1.2.2'
-    runtime 'mysql:mysql-connector-java:5.1.6'
-  //  cucumberRuntime 'juint:junit:4.1.2'
+    cucumberRuntime 'junit:junit:4.12'
+    compile 'junit:junit:4.12'
     compile 'org.picocontainer:picocontainer:2.14.2'
-    compile 'javax.servlet:jstl:1.2'
- //   compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.2.4.Final'
-   // compile group: 'org.hibernate', name: 'hibernate-validator-cdi', version: '5.2.4.Final'
-
 }

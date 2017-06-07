@@ -1,6 +1,5 @@
 package steps;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
@@ -21,11 +20,6 @@ public class LoginSteps {
         loginPage = new LoginPage(webDriver);
     }
 
-    @Then("^The profile of user (.*) of type (.*) should be displayed\\.$")
-    public void theProfileOfUserOfTypeShouldBeDisplayed(String email,
-            String userType) throws Throwable {
-    }
-
     @Then("^An login fail message should be displayed\\.$")
     public void anLoginFailMessageShouldBeDisplayed() throws Throwable {
         assertTrue(loginPage.errorMessageExists());
@@ -36,12 +30,15 @@ public class LoginSteps {
         loginPage.login(email, password);
     }
 
-    @Then("^all the current users should show\\.$")
-    public void all_the_current_users_should_show() throws Throwable {
-        // Write code here that turns the phrase above into concrete actions
-        assertTrue(loginPage.allUsersPageShows());
+    @Then("^I should see a login greeting as \"(.*?)\"\\.$")
+    public void i_should_see_a_login_greeting_as(String greetings) throws Throwable {
+        assertTrue("Cannot find greeting: " + greetings, loginPage.greetingMessageIsDisplayed(greetings));
     }
 
-
+    @Then("^An accoutnt disable message should be displayed\\.$")
+    public void an_accoutnt_disable_message_should_be_displayed() throws Throwable {
+        // Write code here that turns the phrase above into concrete actions
+        assertTrue(loginPage.errorMessageExists());
+    }
 
 }

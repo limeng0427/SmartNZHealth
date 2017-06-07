@@ -11,7 +11,6 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import controller.UserController;
 import domain.User;
 
 public class DBUserDAO implements UserDAO {
