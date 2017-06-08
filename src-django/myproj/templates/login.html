@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h2>Log in.</h2>
+{% if error %}
+ {{ error }}
+{% endif %}
+<div class="row">
+    <div class="col-md-8">
+        <section>
+            <form method="post" class="form-horizontal" action=""> {% csrf_token %}
+                <h4>Use a local account to log in.</h4>
+                <hr />
+                <div class="text-danger validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
+</ul></div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="Email">Email</label>
+                    <div class="col-md-10">
+                        <input class="form-control" type="email" data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="The Email field is required." id="Email" name="username" value="" />
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="Password">Password</label>
+                    <div class="col-md-10">
+                        <input class="form-control" type="password" data-val="true" data-val-required="The Password field is required." id="Password" name="password" />
+                        <span class="text-danger field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="checkbox">
+                            <label for="RememberMe">
+                                <input data-val="true" data-val-required="The Remember me? field is required." id="RememberMe" name="RememberMe" type="checkbox" value="true" />
+                                Remember me?
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-default">Log in</button>
+                    </div>
+                </div>
+                <p>
+                    <a href="{% url 'userprofile:register_patient' %}">Register as a patient?</a>
+                </p>
+                <p>
+                    <a href="{% url 'userprofile:register_doctor' %}">Register as a Doctor?</a>
+                </p>
+                <p>
+                    <a href="{% url 'userprofile:forgot_password' %}">Forgot your password?</a>
+                </p>
+        </section>
+    </div>
+</div>
+
+{% endblock %}

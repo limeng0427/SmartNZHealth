@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}        
+<h2>Register as a doctor.</h2>
+
+<p><span class="text-danger">* Required field.</span></p>
+
+<form method="post" class="form-horizontal" action=""> {% csrf_token %}
+    <hr />
+    <div class="text-danger validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
+</ul></div>
+    <div class="form-group">
+        <label class="col-md-2 control-label" for="Email">Email</label>
+        <div class="col-md-10">
+            <input class="form-control col-md-9" type="email" data-val="true" data-val-email="The Email field is not a valid e-mail address." 
+            data-val-required="The Email field is required." id="Email" name="email" value="" /><span class="text-danger"> * </span>
+            <span class="text-danger field-validation-valid" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label" for="Password">Password</label>
+        <div class="col-md-10">
+            <input class="form-control col-md-9" type="password" data-val="true" 
+            data-val-length="The Password must be at least 6 and at max 100 characters long." 
+            data-val-length-max="100" data-val-length-min="6" data-val-required="The Password field is required." 
+            id="Password" name="password1" /><span class="text-danger"> * </span>
+            <span class="text-danger field-validation-valid" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label" for="ConfirmPassword">Confirm password</label>
+        <div class="col-md-10">
+            <input class="form-control col-md-9" type="password" data-val="true" data-val-equalto="The password and confirmation password do not match." 
+            data-val-equalto-other="*.Password" id="ConfirmPassword" name="password2" /><span class="text-danger"> * </span>
+            <span class="text-danger field-validation-valid" data-valmsg-for="ConfirmPassword" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label" for="FirstName">First Name</label>
+        <div class="col-md-10">
+            <input class="form-control col-md-9" type="text" data-val="true" 
+            data-val-length="The First Name must be at least 1 and at max 100 characters long." data-val-length-max="100" data-val-length-min="1" 
+            data-val-required="The First Name field is required." id="FirstName" name="first_name" value="" /><span class="text-danger"> * </span>
+            <span class="text-danger field-validation-valid" data-valmsg-for="FirstName" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label" for="LastName">Last Name</label>
+        <div class="col-md-10">
+            <input class="form-control col-md-9" type="text" data-val="true" 
+            data-val-length="The Last Name must be at least 1 and at max 100 characters long." data-val-length-max="100" data-val-length-min="1" 
+            data-val-required="The Last Name field is required." id="LastName" name="last_name" value="" /><span class="text-danger"> * </span>
+            <span class="text-danger field-validation-valid" data-valmsg-for="LastName" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label" for="Gender">Gender</label>
+        <div class="col-md-10">
+            <select class="form-control col-md-9" data-val="true" data-val-required="The Gender field is required." id="Gender" name="gender">
+                <option>-- Select Gener --</option>
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+            </select>
+            <span class="text-danger"> * </span>
+            <span class="text-danger field-validation-valid" data-valmsg-for="Gender" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label" for="Mobile">Mobile</label>
+        <div class="col-md-10">
+            <input class="form-control col-md-9" type="tel" data-val="true" data-val-required="The Mobile field is required." id="Mobile" name="mobile" value="" /><span class="text-danger"> * </span>
+            <span class="text-danger field-validation-valid" data-valmsg-for="Mobile" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label" for="Address">Address</label>
+        <div class="col-md-10">
+            <input class="form-control" type="text" id="Address" name="address" value="" />
+            <span class="text-danger field-validation-valid" data-valmsg-for="Address" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-default">Register</button>
+        </div>
+    </div>
+<!--<input name="__RequestVerificationToken" type="hidden" value="CfDJ8CPsXDaWLEhBhtkZfcCasLGMZPKHX8k6MB2j4zT-sD_0MVDtgaNQU5HVZ1vOkPD4ZDmDuSXua9rzFLJ7ga5sapvj7CgjevBOkFghW0-CLEkLICnOEOK7KIO8Jdl9a_xYVtwECSQ4payw_SB2F-Pl2Ro" />-->
+</form>
+{% endblock %}
