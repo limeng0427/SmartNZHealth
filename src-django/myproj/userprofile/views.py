@@ -51,7 +51,7 @@ def login(request):
         for g in user.groups.all():
             print(g, type(g))
         return redirect('/')
-    return render(request, 'login.html', {'error':'invalid username or password'})
+    return render(request, 'login.html', {'error':'Invalid username or password'})
 
 @login_required(login_url='/userprofile/login')
 def logout(request):
