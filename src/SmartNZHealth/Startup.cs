@@ -43,8 +43,8 @@ namespace SmartNZHealth
             // Add framework services.
             //services.AddDbContext<HealthContext>(options =>
             //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+//            services.AddDbContext<ApplicationDbContext>(options =>
+//                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             //services.AddIdentity<ApplicationUser, IdentityRole>(config =>
             //{
