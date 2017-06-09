@@ -59,7 +59,7 @@ class MedicalRecord(models.Model):
     created_by = property(lambda x: username_or_none(x.created_by_id))
     updated_by = property(lambda x: username_or_none(x.updated_by_id))
 
-def record_briefd_or_none(id):
+def record_brief_or_none(id):
     rec = MedicalRecord.objects.filter(id=id)
     return rec[0].brief if rec.count() > 0 else None
 

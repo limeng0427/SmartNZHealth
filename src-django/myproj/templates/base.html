@@ -43,6 +43,12 @@
     {% else %}
     <li><a href='{% url "userprofile:set_patient" %}'>Set patient</a></li>
     {% endif %}
+    <li><a href='{% url "userprofile:visit_list" %}'>List visit history</a></li>
+  {% endif %}
+
+  {% if request.user.profile.is_patient %}
+    <li><a href='{% url "userprofile:rec_list" %}'>List records</a></li>
+    <li><a href='{% url "userprofile:visit_list" %}'>List visit history</a></li>
   {% endif %}
 
   {% if request.user.profile.is_patient or request.user.profile.is_doctor %}

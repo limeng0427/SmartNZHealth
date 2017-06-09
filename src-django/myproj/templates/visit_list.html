@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h2>Visit History of
+    {% if request.user.profile.is_patient %} Patient {{ request.user.username }} {% endif %}
+    {% if request.user.profile.is_doctor %} Doctor {{ request.user.username }} {% endif %}
+</h2><br/>
+<table class=table>
+    <thead>
+    <tr>
+    <th>Date</th>
+    {% if request.user.profile.is_patient %}
+    <th>Visitor</th>
+    {% endif %}
+    {% if request.user.profile.is_doctor %}
+    <th>Patient</th>
+    {% endif %}
+    <th>Action</th>
+    <th>Brief</th>
+    </tr>
+    </thead>
+
+    <tbody>
+{% for rec in data %}
+    <tr>
+
+    <td>{{ rec.timestamp|date:"m/d/Y H:i" }}</td>
+    {% if request.user.profile.is_patient %}
+    <td>{{ rec.visitor }}</td>
+    {% endif %}
+    {% if request.user.profile.is_doctor %}
+    <td>{{ rec.patient }}</td>
+    {% endif %}
+    <td>{{ rec.visit_type }}</td>
+    <td><a href='{% url "userprofile:rec_detail" rec_id=rec.id %}'>
+    {{ rec.record_brief }}</a></td>
+    </tr>
+{% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -176,9 +176,9 @@ def set_patient(request):
 def visit_list(request):
     if request.user.profile.is_patient: # patient can list his own records
         data = VisitRecord.objects.filter(patient_id=request.user.id)
-        return render(request, 'visit_list.html', {'data':data, 'title':"List Records"})
+        return render(request, 'visit_list.html', {'data':data, 'title':"List Visit History"})
     if request.user.profile.is_doctor: # patient can list his own records
         data = VisitRecord.objects.filter(visitor_id=request.user.id)
-        return render(request, 'visit_list.html', {'data':data, 'title':"List Records"})
+        return render(request, 'visit_list.html', {'data':data, 'title':"List Visit History"})
     return redirect('/')
 
