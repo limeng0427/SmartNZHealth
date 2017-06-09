@@ -1,15 +1,32 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-Patient {{ patient.username }} <br/>
+<h2>Medical Record of Patient {{ patient.username }}</h2> <br/>
 
-{{ rec.created }} by {{ rec.created_by_id }} <br/>
-{{ rec.updated }} by {{ rec.updated_by_id }} <br/>
-Active: {{ rec.active }} <br/>
-Brief: {{ rec.brief }} <br/>
-Diagnosis: {{ rec.diagnosis|linebreaks }} <br/>
-Prescription: {{ rec.prescription|linebreaks }} <br/>
-Doctor: {{ rec.doctor }} <br/>
-Date: {{ rec.date }} <br/>
+<div>
+Date: {{ rec.date|date:'m/d/Y' }} 
+</div>
+<div>
+Doctor: <span>{{ rec.doctor }} </span>
+</div>
+<div>
+{% if rec.active %}Active{% else %}Inactive{% endif %}
+</div>
+<div>
+<!--Brief: -->
+<span><h3>{{ rec.brief }}</h3></span>
+</div>
+<div>
+Diagnosis: <blockquote>{{ rec.diagnosis|linebreaks }}</blockquote>
+</div>
+<div>
+Prescription: <blockquote>{{ rec.prescription|linebreaks }}</blockquote>
+</div>
+<div>
+    Created at {{ rec.created|date:'m/d/Y H:i' }} by {{ rec.created_by }} 
+</div>
+<div>
+    Last update at {{ rec.updated|date:'m/d/Y H:i' }} by {{ rec.updated_by }} 
+</div>
 
 {% endblock %}
