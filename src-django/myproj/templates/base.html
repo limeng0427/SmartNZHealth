@@ -35,6 +35,16 @@
                 </ul>
     <ul class="nav navbar-nav navbar-right">
 {% if request.user.is_authenticated %} 
+  {% if request.user.profile.is_doctor %}
+    {% if 'patient' in request.session %}
+    <li><a href='{% url "userprofile:set_patient" %}'>Current patient is {{ request.session.patient }} | Change</a></li>
+    <li><a href='{% url "userprofile:rec_list" %}'>List records</a></li>
+    <li><a href='{% url "userprofile:rec_create" %}'>Create record</a></li>
+    {% else %}
+    <li><a href='{% url "userprofile:set_patient" %}'>Set patient</a></li>
+    {% endif %}
+  {% endif %}
+
   {% if request.user.profile.is_patient or request.user.profile.is_doctor %}
         <li><a>Welcome {% if request.user.profile.is_doctor %}Doctor{% endif %} {{ request.user.username }}</a></li>
         <li><a href="{% url 'userprofile:profile' %}">Profile</a></li>
@@ -50,6 +60,7 @@
         </div>
     </div>
     <div class="container body-content">
+        <h2>&nbsp;</h2>
     {% block content %}
     {% endblock %}
         <hr />

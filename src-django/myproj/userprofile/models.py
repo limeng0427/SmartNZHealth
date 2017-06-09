@@ -7,6 +7,7 @@ from django.utils import timezone
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     active = models.BooleanField(default=True)
+    # is_admin = models.BooleanField(default=False)
     is_patient = models.BooleanField(default=False)
     is_doctor = models.BooleanField(default=False)
     is_doctor_emergency = models.BooleanField(default=False)
@@ -61,7 +62,7 @@ class MedicalRecord(models.Model):
 def record_briefd_or_none(id):
     rec = MedicalRecord.objects.filter(id=id)
     return rec[0].brief if rec.count() > 0 else None
-    
+
 class VisitRecord(models.Model):
     visitor_id = models.PositiveIntegerField(default=0)
     timestamp = models.DateTimeField(auto_now=False, auto_now_add=True)

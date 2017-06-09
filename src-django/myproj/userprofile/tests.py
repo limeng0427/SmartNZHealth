@@ -5,19 +5,6 @@ from .models import *
 from .forms import *
 
 # Create your tests here.
-# class UserProfileTest(TestCase):
-#     username = 'testprofile'
-#     password = username
-#     def test_update(self):
-#         # create a user
-#         user = User.objects.create_user(self.username, password=self.password)
-#         self.client.login(username=self.username, password=self.password)
-#         form_data = {'attr1':True, 'attr2':'bbb'}
-#         response = self.client.post(reverse('userprofile:profile'), form_data, follow=True)
-#         profile = user.profile
-#         self.assertEqual(profile.attr1, form_data['attr1'])
-#         self.assertEqual(profile.attr2, form_data['attr2'])
-
 class LoginTest(TestCase):
     username = 'temporary@host.tld'
     password = 'temporary'
@@ -124,6 +111,7 @@ class RegisterPatientTest(TestCase):
         response = self.client.post(self.url, form_data, follow=True)
         user = response.context['user']
         self.assertTrue(user.is_authenticated)
+        self.assertTrue(user.profile.is_patient)
         self.assertEqual(user.username, self.username)
         user = User.objects.get(username=self.username)
         self.assertEqual(user.username, self.username)
@@ -138,3 +126,26 @@ class RegisterPatientTest(TestCase):
         user = response.context['user']
         self.assertFalse(user.is_authenticated)
 
+
+# class UserProfileTest(TestCase):
+#     username = 'testregister@host.tld'
+#     password = 'temporary'
+#     passbad  = 'asdf'
+#     email = username
+#     first_name = 'first name'
+#     last_name = 'last_name'
+#     gender = 'M'
+#     birthday = '2000-01-02'
+#     mobile = '1234567890'
+#     address = 'asfd123puqwpeor097z09xcv'
+#     emergency_contact = 'John Doe'
+#     emergency_number = '1234567890'
+#     def test_update(self):
+#         # create a user
+#         user = User.objects.create_user(self.username, password=self.password)
+#         self.client.login(username=self.username, password=self.password)
+#         form_data = {'attr1':True, 'attr2':'bbb'}
+#         response = self.client.post(reverse('userprofile:profile'), form_data, follow=True)
+#         profile = user.profile
+#         self.assertEqual(profile.attr1, form_data['attr1'])
+#         self.assertEqual(profile.attr2, form_data['attr2'])

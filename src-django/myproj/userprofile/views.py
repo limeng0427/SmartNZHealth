@@ -25,7 +25,7 @@ def user_profile(request):
         if form.is_valid():
             form.save()
             return redirect('/')
-    return render(request, 'profile.html', {'form':form})
+    return render(request, 'profile.html', {'form':form, 'title':'Profile'})
 
 def home(request):
     # get groups for test
@@ -37,7 +37,7 @@ def contact(request):
 
 def forgot_password(request):
     # get groups for test
-    return render(request, 'home.html', {'title':"forgot_password"})
+    return render(request, 'home.html', {'title':"Reset Password"})
 
 # Create your views here.
 def login(request):
@@ -51,7 +51,7 @@ def login(request):
         for g in user.groups.all():
             print(g, type(g))
         return redirect('/')
-    return render(request, 'login.html', {'error':'Invalid username or password'})
+    return render(request, 'login.html', {'title':"Login", 'error':'Invalid username or password'})
 
 @login_required(login_url='/userprofile/login')
 def logout(request):
@@ -61,26 +61,27 @@ def logout(request):
 
 def register_patient(request):
     if request.method == 'GET':
-        return render(request, 'register_patient.html', {'form':PatientRegistrationForm()})
+        return render(request, 'register_patient.html', {'form':PatientRegistrationForm(), 'title':"Register Patient"})
     form = PatientRegistrationForm(data=request.POST)
     if form.is_valid():
         user = form.save(commit=True)
         if user is None:
-            return render(request, 'register_patient.html', {'form':form, 'error':'duplicate username'})
+            return render(request, 'register_patient.html', {'form':form, 'error':'duplicate username', 'title':"Register Patient"})
         user.save()
         auth.login(request, user)
         return redirect('/')
-    return render(request, 'register_patient.html', {'form':form})
+    return render(request, 'register_patient.html', {'form':form, 'title':"Register Patient"})
 
 def register_doctor(request):
     if request.method == 'GET':
-        return render(request, 'register_doctor.html', {'form':DoctorRegistrationForm()})
-    form = DoctorRegistrationForm(data=request.POST)
-    if form.is_valid():
-        user = form.save()
-        auth.login(request, user)
-        return redirect('/')
-    return render(request, 'register_doctor.html', {'form':form})
+        form = DoctorRegistrationForm()
+    else:
+        form = DoctorRegistrationForm(data=request.POST)
+        if form.is_valid():
+            user = form.save()
+            auth.login(request, user)
+            return redirect('/')
+    return render(request, 'register_doctor.html', {'form':form, 'title':"Register Doctor"})
 
 # https://simpleisbetterthancomplex.com/tips/2016/08/04/django-tip-9-password-change-form.html
 @login_required(login_url='/userprofile/login')
@@ -96,7 +97,7 @@ def change_password(request):
             messages.error(request, 'Please correct the error below.')
     else:
         form = PasswordChangeForm(request.user)
-    return render(request, 'change_password.html', {'form':form})
+    return render(request, 'change_password.html', {'form':form, 'title':'Change Password'})
 
 def doctor_get_patient_in_session(request):
     if not request.user.profile.is_doctor:
@@ -160,7 +161,7 @@ def rec_delete(request):
 @login_required
 def set_patient(request):
     if request.method == 'GET':
-        return render(request, 'form.html', {'form':SetPatientForm(), 'submit':'Set'})
+        return render(request, 'form.html', {'form':SetPatientForm(), 'submit':'Set', 'title':'Set Patient'})
     else:
         form = SetPatientForm(request.POST)
         if form.is_valid():
@@ -175,9 +176,9 @@ def set_patient(request):
 def visit_list(request):
     if request.user.profile.is_patient: # patient can list his own records
         data = VisitRecord.objects.filter(patient_id=request.user.id)
-        return render(request, 'visit_list.html', {'data':data})
+        return render(request, 'visit_list.html', {'data':data, 'title':"List Records"})
     if request.user.profile.is_doctor: # patient can list his own records
         data = VisitRecord.objects.filter(visitor_id=request.user.id)
-        return render(request, 'visit_list.html', {'data':data})
+        return render(request, 'visit_list.html', {'data':data, 'title':"List Records"})
     return redirect('/')
 

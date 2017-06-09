@@ -13,6 +13,7 @@
     <div class="text-danger validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
 </ul></div>
     <div class="form-group">
+        {{ form.email.errors }}
         <label class="col-md-2 control-label" for="Email">Email</label>
         <div class="col-md-10">
             <input class="form-control col-md-9" type="email" data-val="true" data-val-email="The Email field is not a valid e-mail address." 
@@ -21,6 +22,7 @@
         </div>
     </div>
     <div class="form-group">
+        {{ form.password1.errors }}
         <label class="col-md-2 control-label" for="Password">Password</label>
         <div class="col-md-10">
             <input class="form-control col-md-9" type="password" data-val="true" 
@@ -31,6 +33,7 @@
         </div>
     </div>
     <div class="form-group">
+        {{ form.password2.errors }}
         <label class="col-md-2 control-label" for="ConfirmPassword">Confirm password</label>
         <div class="col-md-10">
             <input class="form-control col-md-9" type="password" data-val="true" data-val-equalto="The password and confirmation password do not match." 
@@ -39,6 +42,7 @@
         </div>
     </div>
     <div class="form-group">
+        {{ form.first_name.errors }}
         <label class="col-md-2 control-label" for="FirstName">First Name</label>
         <div class="col-md-10">
             <input class="form-control col-md-9" type="text" data-val="true" 
@@ -48,6 +52,7 @@
         </div>
     </div>
     <div class="form-group">
+        {{ form.last_name.errors }}
         <label class="col-md-2 control-label" for="LastName">Last Name</label>
         <div class="col-md-10">
             <input class="form-control col-md-9" type="text" data-val="true" 
@@ -57,6 +62,7 @@
         </div>
     </div>
     <div class="form-group">
+        {{ form.gender.errors }}
         <label class="col-md-2 control-label" for="Gender">Gender</label>
         <div class="col-md-10">
             <select class="form-control col-md-9" data-val="true" data-val-required="The Gender field is required." id="Gender" name="gender">
@@ -69,6 +75,7 @@
         </div>
     </div>
     <div class="form-group">
+        {{ form.mobile.errors }}
         <label class="col-md-2 control-label" for="Mobile">Mobile</label>
         <div class="col-md-10">
             <input class="form-control col-md-9" type="tel" data-val="true" data-val-required="The Mobile field is required." id="Mobile" name="mobile" value="" /><span class="text-danger"> * </span>
@@ -76,6 +83,7 @@
         </div>
     </div>
     <div class="form-group">
+        {{ form.address.errors }}
         <label class="col-md-2 control-label" for="Address">Address</label>
         <div class="col-md-10">
             <input class="form-control" type="text" id="Address" name="address" value="" />

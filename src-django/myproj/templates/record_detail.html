@@ -1,0 +1,15 @@
+<!-- a general form template -->
+{% extends 'base.html' %}
+{% block content %}
+Patient {{ patient.username }} <br/>
+
+{{ rec.created }} by {{ rec.created_by_id }} <br/>
+{{ rec.updated }} by {{ rec.updated_by_id }} <br/>
+Active: {{ rec.active }} <br/>
+Brief: {{ rec.brief }} <br/>
+Diagnosis: {{ rec.diagnosis|linebreaks }} <br/>
+Prescription: {{ rec.prescription|linebreaks }} <br/>
+Doctor: {{ rec.doctor }} <br/>
+Date: {{ rec.date }} <br/>
+
+{% endblock %}
