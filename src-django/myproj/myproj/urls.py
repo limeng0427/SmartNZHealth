@@ -20,7 +20,7 @@ from userprofile import views as userprofile_views
 
 urlpatterns = [
     url(r'^$', userprofile_views.home, name='home'),
-    url(r'^contact/$', userprofile_views.home, name='contact'),
+    url(r'^contact/$', userprofile_views.contact, name='contact'),
     url(r'^admin/', admin.site.urls),
     # url(r'^home/', include('home.urls', namespace='home')),
     url(r'^userprofile/', include('userprofile.urls', namespace='userprofile')),

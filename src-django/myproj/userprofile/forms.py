@@ -29,6 +29,8 @@ class PatientRegistrationForm(UserCreationForm):
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
         user.username = user.email
+        if User.objects.filter(username=user.username).count() > 0:
+            return None
         user.save()
         profile = user.profile
         profile.email = self.cleaned_data['email']

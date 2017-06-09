@@ -31,6 +31,10 @@ def home(request):
     # get groups for test
     return render(request, 'home.html', {'title':"Home Page"})
 
+def contact(request):
+    # get groups for test
+    return render(request, 'contact.html', {'title':"Contact"})
+
 def forgot_password(request):
     # get groups for test
     return render(request, 'home.html', {'title':"forgot_password"})
@@ -60,7 +64,10 @@ def register_patient(request):
         return render(request, 'register_patient.html', {'form':PatientRegistrationForm()})
     form = PatientRegistrationForm(data=request.POST)
     if form.is_valid():
-        user = form.save()
+        user = form.save(commit=False)
+        if user is None:
+            return render(request, 'register_patient.html', {'form':form, 'error':'duplicate username'})
+        user.save()
         auth.login(request, user)
         return redirect('/')
     return render(request, 'register_patient.html', {'form':form})
