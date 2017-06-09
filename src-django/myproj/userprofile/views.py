@@ -68,7 +68,7 @@ def register_patient(request):
     if form.is_valid():
         user = form.save(commit=True)
         if user is None:
-            messages.error('duplicate username')
+            messages.error(request, 'duplicate username')
             return render(request, 'register_patient.html', {'form':form, 'title':"Register Patient"})
         user.save()
         auth.login(request, user)
