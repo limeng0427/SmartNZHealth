@@ -64,7 +64,7 @@ def register_patient(request):
         return render(request, 'register_patient.html', {'form':PatientRegistrationForm()})
     form = PatientRegistrationForm(data=request.POST)
     if form.is_valid():
-        user = form.save(commit=False)
+        user = form.save(commit=True)
         if user is None:
             return render(request, 'register_patient.html', {'form':form, 'error':'duplicate username'})
         user.save()
