@@ -2,9 +2,7 @@
 {% load static %}
 {% block content %}
 <h2>Profile</h2>
-{% if error %}
- {{ error }}
-{% endif %}
+
 <p><span class="text-danger">* Required field.</span></p>
 
 <form method="post" class="form-horizontal" action=""> {% csrf_token %}
@@ -109,7 +107,8 @@
         {{ form.address.errors }}
         <label class="col-md-2 control-label" for="Address">Address</label>
         <div class="col-md-10">
-            <input class="form-control" type="text" id="Address" name="address" value="{{ form.address.value }}" />
+            <input class="form-control col-md-9" type="text" id="Address" name="address" value="{{ form.address.value }}" required/>
+            <span class="text-danger"> * </span>
             <span class="text-danger field-validation-valid" data-valmsg-for="Address" data-valmsg-replace="true"></span>
         </div>
     </div>
@@ -144,4 +143,10 @@
         </div>
     </div>
 </form>
+
+    <div>
+        <a class="btn btn-default" href='{% url "userprofile:change_password" %}'>Change Password</a>
+        <!--<a class="btn btn-default" href="{% url 'userprofile:rec_list' %}">Back to List</a>-->
+    </div>
+
 {% endblock %}

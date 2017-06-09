@@ -8,6 +8,8 @@ from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from django.http import Http404
+from django.db.models import Q
+
 
 # Create your views here.
 @login_required
@@ -41,17 +43,17 @@ def forgot_password(request):
 
 # Create your views here.
 def login(request):
-    if request.method == 'GET':
-        return render(request, 'login.html')
-    username = request.POST.get('username', '')
-    password = request.POST.get('password', '')
-    user = auth.authenticate(username=username, password=password)
-    if user is not None:
-        auth.login(request, user)
-        for g in user.groups.all():
-            print(g, type(g))
-        return redirect('/')
-    return render(request, 'login.html', {'title':"Login", 'error':'Invalid username or password'})
+    if request.method == 'POST':
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+        user = auth.authenticate(username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+            for g in user.groups.all():
+                print(g, type(g))
+            return redirect('/')
+        messages.error(request, 'Invalid username or password')
+    return render(request, 'login.html', {'title':"Login"})
 
 @login_required(login_url='/userprofile/login')
 def logout(request):
@@ -66,7 +68,8 @@ def register_patient(request):
     if form.is_valid():
         user = form.save(commit=True)
         if user is None:
-            return render(request, 'register_patient.html', {'form':form, 'error':'duplicate username', 'title':"Register Patient"})
+            messages.error('duplicate username')
+            return render(request, 'register_patient.html', {'form':form, 'title':"Register Patient"})
         user.save()
         auth.login(request, user)
         return redirect('/')
@@ -117,7 +120,7 @@ def rec_create(request):
         return redirect('/')
     if request.method == 'GET':
         form = MedicalRecordForm()
-        return render(request, 'record_create.html', {'form':form, 'submit':'Create'})
+        return render(request, 'record_create.html', {'form':form, 'submit':'Create', 'title':"Create Record"})
     else:
         form = MedicalRecordForm(request.POST)
         if form.is_valid():
@@ -125,30 +128,48 @@ def rec_create(request):
             print('rec_create', type(rec))
             print(rec.id, rec.patient_id, rec.created_by_id)
             # create visit record
-            visit = VisitRecord.objects.create(visitor_id=request.user.id,
-                                               visit_type='create',
-                                               record_id=rec.id,
-                                               patient_id=patient.id)
-            return render(request, 'record_detail.html', {'rec':rec, 'patient':patient})
+            VisitRecord.objects.create(visitor_id=request.user.id,
+                                       visit_type='create',
+                                       record_id=rec.id,
+                                       patient_id=patient.id)
+            return render(request, 'record_detail.html', {'rec':rec, 'patient':patient, 'title':"Create Record"})
     return redirect('/')
 
 @login_required
 def rec_detail(request, rec_id):
     rec = get_object_or_404(MedicalRecord, id=rec_id)
     patient = get_object_or_404(User, id=rec.patient_id)
-    return render(request, 'record_detail.html', {'rec':rec, 'patient':patient})
-    pass
+    if request.user.profile.is_doctor:
+        VisitRecord.objects.create(visitor_id=request.user.id,
+                                   visit_type='detail',
+                                   record_id=rec.id,
+                                   patient_id=patient.id)
+    return render(request, 'record_detail.html', {'rec':rec, 'patient':patient, 'title':"Record Detail"})
 
 @login_required(login_url='/userprofile/login')
 def rec_list(request):
     if request.user.profile.is_patient: # patient can list his own records
         data = MedicalRecord.objects.filter(patient_id=request.user.id)
-        return render(request, 'record_list.html', {'data':data, 'patient':request.user})
-    patient = doctor_get_patient_in_session(request)
-    if patient is None:
-        return redirect('/')
-    data = MedicalRecord.objects.filter(patient_id=patient.id)
-    return render(request, 'record_list.html', {'data':data, 'patient':patient})
+        patient = request.user
+    else:
+        patient = doctor_get_patient_in_session(request)
+        if patient is None:
+            return redirect('/')
+        data = MedicalRecord.objects.filter(patient_id=patient.id)
+    search = request.GET.get('search')
+    if search and len(search) > 0:
+        data = data.filter(
+            Q(brief__icontains=search)|
+            Q(diagnosis__icontains=search)|
+            Q(prescription__icontains=search)
+            ).distinct()
+    if request.user.profile.is_doctor:
+        for rec in data:
+            VisitRecord.objects.create(visitor_id=request.user.id,
+                                    visit_type='list',
+                                    record_id=rec.id,
+                                    patient_id=patient.id)
+    return render(request, 'record_list.html', {'data':data, 'patient':patient, 'title':"List Records"})
 
 @login_required
 def rec_update(request):
@@ -176,9 +197,10 @@ def set_patient(request):
 def visit_list(request):
     if request.user.profile.is_patient: # patient can list his own records
         data = VisitRecord.objects.filter(patient_id=request.user.id)
-        return render(request, 'visit_list.html', {'data':data, 'title':"List Visit History"})
-    if request.user.profile.is_doctor: # patient can list his own records
+    elif request.user.profile.is_doctor: # patient can list his own records
         data = VisitRecord.objects.filter(visitor_id=request.user.id)
-        return render(request, 'visit_list.html', {'data':data, 'title':"List Visit History"})
-    return redirect('/')
+    else:
+        return redirect('/')
+    data = data.order_by('-timestamp')
+    return render(request, 'visit_list.html', {'data':data, 'title':"List Visit History"})
 

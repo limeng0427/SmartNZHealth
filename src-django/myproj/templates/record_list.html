@@ -31,6 +31,18 @@
         </dd>
     </dl>
 </div>
+
+<form method="get" class="form-inline" action="">
+    <input class="form-control" type="text" id="search" name="search" value="{{ request.GET.search }}" />
+    <button type="submit" class="btn btn-default">Search</button>
+    <button type="button" class="btn btn-default" onclick="$('#search').val('')">Reset</button>
+    <!--<div class="col-sm-4">
+        <div class="search_bloc __web-inspector-hide-shortcut__">
+            <input type="text" name="search" placeholder="Search..." style="vertical-align: middle;">
+        </div>
+    </div>-->
+</form>
+
 <table class=table>
         <thead>
         <tr>

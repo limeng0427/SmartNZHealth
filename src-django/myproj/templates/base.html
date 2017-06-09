@@ -52,8 +52,8 @@
   {% endif %}
 
   {% if request.user.profile.is_patient or request.user.profile.is_doctor %}
-        <li><a>Welcome {% if request.user.profile.is_doctor %}Doctor{% endif %} {{ request.user.username }}</a></li>
-        <li><a href="{% url 'userprofile:profile' %}">Profile</a></li>
+        <li><a href="{% url 'userprofile:profile' %}">Welcome {% if request.user.profile.is_doctor %}Doctor{% endif %} {{ request.user.username }}</a></li>
+        <!--<li><a href="{% url 'userprofile:profile' %}">Profile</a></li>-->
   {% endif %}
         <li><a href="{% url 'userprofile:logout' %}">Log out</a></li>
 {% else %}
@@ -65,8 +65,17 @@
             </div>
         </div>
     </div>
+
     <div class="container body-content">
         <h2>&nbsp;</h2>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
     {% block content %}
     {% endblock %}
         <hr />
