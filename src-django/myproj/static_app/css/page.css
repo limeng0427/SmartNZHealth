@@ -1,0 +1,20 @@
+@CHARSET "UTF-8";
+DIV.scott {
+	PADDING-BOTTOM: 3px; MARGIN: 3px; margin-left:0; PADDING-TOP: 3px; margin-top:15px; margin-bottom:15px;
+}
+DIV.scott A {
+	BORDER-RIGHT: #ddd 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #ddd 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 2px; BORDER-LEFT: #ddd 1px solid; COLOR: #555; MARGIN-RIGHT: 2px; PADDING-TOP: 2px; BORDER-BOTTOM: #ddd 1px solid; TEXT-DECORATION: none
+}
+DIV.scott A:hover {
+	BORDER-RIGHT: #F29208 1px solid; BORDER-TOP: #F29208 1px solid; BORDER-LEFT: #F29208 1px solid; COLOR: #F29208; BORDER-BOTTOM: #F29208 1px solid; BACKGROUND-COLOR: #f1f1f1
+}
+DIV.scott A:active {
+	BORDER-RIGHT: #F29208 1px solid; BORDER-TOP: #F29208 1px solid; BORDER-LEFT: #F29208 1px solid; COLOR: #638425; BORDER-BOTTOM: #F29208 1px solid; BACKGROUND-COLOR: #f1f1f1
+}
+DIV.scott SPAN.current {
+	BORDER-RIGHT: #F29208 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #F29208 1px solid; PADDING-LEFT: 5px; FONT-WEIGHT: bold; PADDING-BOTTOM: 3px; BORDER-LEFT: #F29208 1px solid; COLOR: #fff; MARGIN-RIGHT: 2px; PADDING-TOP: 3px; BORDER-BOTTOM: #F29208 1px solid; BACKGROUND-COLOR: #F29208
+}
+DIV.scott SPAN.disabled {
+	BORDER-RIGHT: #ddd 1px solid; PADDING-RIGHT: 5px; BORDER-TOP: #ddd 1px solid; PADDING-LEFT: 5px; PADDING-BOTTOM: 2px; BORDER-LEFT: #ddd 1px solid; COLOR: #ccc; MARGIN-RIGHT: 2px; PADDING-TOP: 2px; BORDER-BOTTOM: #ddd 1px solid
+}
+

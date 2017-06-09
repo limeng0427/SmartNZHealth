@@ -1,0 +1,97 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title }} - SmartNZHealth</title>
+    
+    
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="{% static 'css/site.min.css' %}" />    
+        <!--?v=h8ExPRRnMqhpU3fYeWEKCdqD35Ex9WrJBp-gBbUjapo-->
+    
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{% url 'home' %}">SmartNZHealth</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <!--<li><a href="{% url 'home' %}">Home</a></li>-->
+                    <li><a href="{% url 'contact' %}">Contact</a></li>
+                </ul>
+    <ul class="nav navbar-nav navbar-right">
+{% if request.user.is_authenticated %} 
+  {% if request.user.profile.is_doctor %}
+    {% if 'patient' in request.session %}
+    <li><a href='{% url "userprofile:set_patient" %}'>Current patient is {{ request.session.patient }} | Change</a></li>
+    <li><a href='{% url "userprofile:rec_list" %}'>List records</a></li>
+    <li><a href='{% url "userprofile:rec_create" %}'>Create record</a></li>
+    {% else %}
+    <li><a href='{% url "userprofile:set_patient" %}'>Set patient</a></li>
+    {% endif %}
+    <li><a href='{% url "userprofile:visit_list" %}'>List visit history</a></li>
+  {% endif %}
+
+  {% if request.user.profile.is_patient %}
+    <li><a href='{% url "userprofile:rec_list" %}'>List records</a></li>
+    <li><a href='{% url "userprofile:visit_list" %}'>List visit history</a></li>
+  {% endif %}
+
+  {% if request.user.profile.is_patient or request.user.profile.is_doctor %}
+        <li><a href="{% url 'userprofile:profile' %}">Welcome {% if request.user.profile.is_doctor %}Doctor{% endif %} {{ request.user.username }}</a></li>
+        <!--<li><a href="{% url 'userprofile:profile' %}">Profile</a></li>-->
+  {% endif %}
+        <li><a href="{% url 'userprofile:logout' %}">Log out</a></li>
+{% else %}
+        <li><a href="{% url 'userprofile:register_patient' %}">Register as a patient</a></li>
+        <li><a href="{% url 'userprofile:register_doctor' %}">Register as a doctor</a></li>
+        <li><a href="{% url 'userprofile:login' %}">Log in</a></li>
+{% endif %}
+    </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container body-content">
+        <h2>&nbsp;</h2>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% block content %}
+    {% endblock %}
+        <hr />
+        <footer>
+            <p>&copy; 2017 - SmartNZHealth</p>
+        </footer>
+    </div>
+
+    
+
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</body>
+</html>

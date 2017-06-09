@@ -1,0 +1,10 @@
+- DONE - User Page Object Pattern for Selenium
+
+- DONE - Setup Cucumber html report to capture screenshot when failing
+
+- DONE - Rewrite user story to make it more succinct so that we have story like
+    When I login with email "no_such_user@nznh.com" with password "any"
+    then A login error message should dispaly
+
+- DONE - Use file (later db) to store users so that we can prepare users in cucumber tests.
+

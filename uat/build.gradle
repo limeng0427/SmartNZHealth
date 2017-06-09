@@ -1,0 +1,36 @@
+plugins {
+  id "com.github.samueltbrown.cucumber" version "0.9"
+}
+
+apply plugin: 'eclipse'
+
+repositories {
+   mavenCentral()
+   mavenLocal()
+}
+
+cucumber {
+    formats = ['pretty', 'html:out']
+    tags = ['@Register']
+}
+
+
+dependencies {
+    cucumberRuntime 'info.cukes:cucumber-groovy:1.2.2'
+    compile 'info.cukes:cucumber-groovy:1.2.2'
+    compile 'info.cukes:cucumber-java:1.2.2'
+
+    cucumberRuntime 'org.codehaus.groovy:groovy-all:2.2.1'
+
+    cucumberRuntime 'org.seleniumhq.selenium:selenium-java:3.4.0'
+    compile 'org.seleniumhq.selenium:selenium-java:3.4.0'
+
+    cucumberRuntime 'org.seleniumhq.selenium:selenium-server:3.4.0'
+    compile 'org.seleniumhq.selenium:selenium-server:3.4.0'
+
+    cucumberRuntime 'org.picocontainer:picocontainer:2.14.2'
+    cucumberRuntime 'info.cukes:cucumber-picocontainer:1.2.2'
+    cucumberRuntime 'junit:junit:4.12'
+    compile 'junit:junit:4.12'
+    compile 'org.picocontainer:picocontainer:2.14.2'
+}

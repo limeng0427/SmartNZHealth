@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h2>Register as a doctor.</h2>
+
+<p><span class="text-danger">* Required field.</span></p>
+
+<form method="post" class="form-horizontal" action=""> {% csrf_token %}
+    <hr />
+    <div class="text-danger validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
+</ul></div>
+    <div class="form-group">
+        {{ form.brief.errors }}
+        <label class="col-md-2 control-label" for="Brief">Brief</label>
+        <div class="col-md-10">
+            <input class="form-control col-md-9" type="text" data-val="true" required
+            data-val-length="The Brief must be at least 1 and at max 200 characters long." data-val-length-max="200" data-val-length-min="1"
+            data-val-required="The Brief field is required." 
+            id="Brief" name="brief" value="{{ form.brief.value|default:'' }}" /><span class="text-danger"> * </span>
+            <span class="text-danger field-validation-valid" data-valmsg-for="Brief" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form.diagnosis.errors }}
+        <label class="col-md-2 control-label" for="Diagnosis">Diagnosis</label>
+        <div class="col-md-10">
+            <textarea class="form-control col-md-9" type="text" data-val="true" rows="6" cols="40" required
+            data-val-required="The Diagnosis field is required." 
+            id="Diagnosis" name="diagnosis">{{ form.diagnosis.value|default:"" }}</textarea><span class="text-danger"> * </span>
+            <span class="text-danger field-validation-valid" data-valmsg-for="Diagnosis" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form.prescription.errors }}
+        <label class="col-md-2 control-label" for="Prescription">Prescription</label>
+        <div class="col-md-10">
+            <textarea class="form-control col-md-9" type="text" data-val="true" rows="6" cols="40" required
+            data-val-required="The Prescription field is required." 
+            id="Prescription" name="prescription">{{ form.prescription.value|default:'' }}</textarea><span class="text-danger"> * </span>
+            <span class="text-danger field-validation-valid" data-valmsg-for="Prescription" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        {{ form.doctor.errors }}
+        <label class="col-md-2 control-label" for="Doctor">Doctor</label>
+        <div class="col-md-10">
+            <input class="form-control col-md-9" type="text" data-val="true" required
+            data-val-length="The Doctor must be at least 1 and at max 200 characters long." data-val-length-max="200" data-val-length-min="1"
+            data-val-required="The Doctor field is required." 
+            id="Doctor" name="doctor" value="{{ form.doctor.value|default:'' }}" /><span class="text-danger"> * </span>
+            <span class="text-danger field-validation-valid" data-valmsg-for="Doctor" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form.date.errors }}
+        <label class="col-md-2 control-label" for="Date">Date</label>
+        <div class="col-md-10">
+            <input class="form-control col-md-9" type="date" data-val="true" data-val-required="The Date field is required." 
+            id="Date" name="date" value="{{ form.date.value|date:'Y-m-d' }}" /><span class="text-danger"> * </span>
+            <span class="text-danger field-validation-valid" data-valmsg-for="Date" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+    <!--<input type="hidden" name="initial-date" value="2017-06-09 08:57:43" id="initial-id_date" />-->
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-default">Create</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

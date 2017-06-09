@@ -1,0 +1,78 @@
+@model SmartNZHealth.Models.Case
+@using SmartNZHealth.Models
+
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Add a new case";
+    ApplicationUser user = (ApplicationUser)ViewBag.User;
+}
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => user.FirstName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => user.FirstName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => user.LastName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => user.LastName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => user.Sex)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => user.Sex)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => user.Birthday)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => user.Birthday)
+        </dd>
+    </dl>
+</div>
+
+<form asp-action="Create" asp-route-Id="@user.Id" asp-route-DoctorId="@UserManager.GetUserId(User)">
+    <div class="form-horizontal">
+        <h4>Case</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="ConsultationDate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ConsultationDate" class="form-control"/>
+                <span asp-validation-for="ConsultationDate" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="CaseDescription" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <textarea asp-for="CaseDescription" class="form-control" rows="6"></textarea>
+                <span asp-validation-for="CaseDescription" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Prescription" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <textarea asp-for="Prescription" class="form-control" rows="6"></textarea>
+                <span asp-validation-for="Prescription" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+                <a asp-controller="Cases" asp-action="Details" asp-route-id="@user.Id" class="btn btn-default">Cancel</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

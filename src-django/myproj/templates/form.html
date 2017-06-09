@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<!-- a general form template -->
+<h2> {{ title }} </h2>
+<form method=POST>{% csrf_token %}
+    {% for field in form %}
+    <div>
+        {{ field.errors }}
+        {{ field.label_tag }} {{ field }}
+    </div>
+    {% endfor %}
+    <input type=submit value='{{ submit }}'/>
+</form>
+{% endblock %}

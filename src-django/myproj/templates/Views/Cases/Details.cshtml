@@ -1,0 +1,102 @@
+@model SmartNZHealth.Models.ApplicationUser  
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    ViewData["Title"] = "Cases";
+    var doctors = (List<ApplicationUser>)ViewBag.Doctors;
+}
+
+<h2>Cases</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Sex)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Sex)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Birthday)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Birthday)
+        </dd>
+    </dl>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Consultation date
+            </th>
+            <th>
+                Case description
+            </th>
+            <th>
+                Prescription
+            </th>
+        @if (User.IsInRole("Patient"))
+        {
+            <th>
+                Doctor
+            </th>
+        }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Cases)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(Item => item.ConsultationDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(Item => item.CaseDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(Item => item.Prescription)
+                </td>
+                @if (User.IsInRole("Patient"))
+                {
+                    <th>
+                        @*@Html.DisplayFor(Item => (item.Doctor.FirstName + " " + item.Doctor.LastName))*@
+                        @foreach (var doc in doctors)
+                        {
+                            if (doc.Id == item.DoctorId)
+                            {
+                                @Html.DisplayFor(Item => (doc.FirstName));
+                                <span> </span>
+                                @Html.DisplayFor(Item => (doc.LastName));
+                                break;
+                            }
+                        }
+                    </th>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (User.IsInRole("Doctor"))
+{
+    <div>
+        @*<a asp-action="Edit" asp-route-id="@Model.">Edit</a> |*@
+        <a asp-controller="Cases" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-default">Create a new case</a>
+        <a asp-controller="Patient" asp-action="PatientList" class="btn btn-default">Back to List</a>
+    </div>
+}

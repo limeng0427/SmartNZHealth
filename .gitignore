@@ -2,3 +2,10 @@
 src/SmartNZHealth/bin/
 src/SmartNZHealth/obj/
 src/project.lock.json
+uat/bin/
+uat/out/
+uat/build/
+uat/.classpath
+uat/.project
+uat/.settings/
+uat/.gradle/

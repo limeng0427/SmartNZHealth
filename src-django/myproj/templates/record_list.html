@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h2>Patient {{ patient.username }} </h2><br/>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            FirstName
+        </dt>
+        <dd>
+            {{ patient.profile.first_name }}
+        </dd>
+        <dt>
+            LastName
+        </dt>
+        <dd>
+            {{ patient.profile.last_name }}
+        </dd>
+        <dt>
+            Sex
+        </dt>
+        <dd>
+            {% if patient.profile.gender == 'M' %}Male{% else %}Female{% endif %}
+        </dd>
+        <dt>
+            Birthday
+        </dt>
+        <dd>
+            {{ patient.profile.birthday|date:"m/d/Y"}}
+        </dd>
+    </dl>
+</div>
+
+<form method="get" class="form-inline" action="">
+    <input class="form-control" type="text" id="search" name="search" value="{{ request.GET.search }}" />
+    <button type="submit" class="btn btn-default">Search</button>
+    <button type="button" class="btn btn-default" onclick="$('#search').val('')">Reset</button>
+    <!--<div class="col-sm-4">
+        <div class="search_bloc __web-inspector-hide-shortcut__">
+            <input type="text" name="search" placeholder="Search..." style="vertical-align: middle;">
+        </div>
+    </div>-->
+</form>
+
+<table class=table>
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Update</th>
+            <th>Update By</th>
+            <th>Brief</th>
+            <th>Diagnosis</th>
+            <th>Prescription</th>
+            <th>Doctor</th>
+        </tr>
+    </thead>
+
+<!--<tr><th>Brief</th><th>Created</th><th>Updated</th><th>active</th><th>Diagnosis</th><th>Prescription</th><th>Doctor</th><th>Date</th></tr>-->
+    <tbody>
+{% for rec in data %}
+        <tr>
+            <td><a href='{% url "userprofile:rec_detail" rec_id=rec.id %}'>{{ rec.date|date:"m/d/Y" }}</a></td>
+            <td>{{ rec.updated|date:"m/d/Y" }}</td>
+            <td>{{ rec.updated_by }}</td>
+            <td>{{ rec.brief }}</td>
+            <td>
+            {{ rec.diagnosis|linebreaks|truncatechars:200 }} <br/>
+            </td>
+            <td>
+            {{ rec.prescription|linebreaks|truncatechars:200 }} <br/>
+            </td>
+            <td>{{ rec.doctor }} <br/>
+            </td>
+        </tr>
+{% endfor %}
+    </tbody>
+</table>
+
+    <div>
+        <a class="btn btn-default" href="{% url 'userprofile:rec_create' %}">Create a new record</a>
+        <!--<a class="btn btn-default" href="{% url 'userprofile:rec_list' %}">Back to List</a>-->
+    </div>
+
+{% endblock %}

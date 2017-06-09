@@ -1,0 +1,47 @@
+@model ICollection<SmartNZHealth.Models.ApplicationUser>
+
+@{
+    ViewData["Title"] = "All the doctors";
+}
+
+<h2>All the patients</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Username
+            </th>
+            <th>
+                Enabled
+            </th>
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(Item => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(Item => item.Enabled)
+            </td>
+            <td>
+                @*<a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
+                @if (item.Enabled == true)
+                {
+                    <a asp-action="EnableDisable" asp-route-id="@item.Id">Disable</a>;
+                }
+                else
+                {
+                    <a asp-action="EnableDisable" asp-route-id="@item.Id">Enable</a>}
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

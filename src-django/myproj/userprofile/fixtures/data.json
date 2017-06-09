@@ -1,0 +1,383 @@
+[
+{
+    "model": "userprofile.medicalrecord",
+    "pk": 1,
+    "fields": {
+        "patient_id": 1,
+        "created": "2017-06-07T00:45:56.548Z",
+        "created_by_id": 2,
+        "updated": "2017-06-07T00:45:56.549Z",
+        "updated_by_id": 2,
+        "active": true,
+        "inactive_by_id": 0,
+        "brief": "brief message",
+        "diagnosis": "diagnosis text here\r\ndiagnosis text here\r\ndiagnosis text here\r\ndiagnosis text here",
+        "prescription": "prescription here\r\nprescription here\r\nprescription here",
+        "doctor": "doct's name",
+        "date": "2017-06-07T00:44:50Z"
+    }
+},
+{
+    "model": "userprofile.medicalrecord",
+    "pk": 2,
+    "fields": {
+        "patient_id": 1,
+        "created": "2017-06-07T00:46:27.035Z",
+        "created_by_id": 2,
+        "updated": "2017-06-07T00:46:27.035Z",
+        "updated_by_id": 2,
+        "active": true,
+        "inactive_by_id": 0,
+        "brief": "brief for another",
+        "diagnosis": "ddddddd\r\ndd\r\nd\r\nd\r\nd",
+        "prescription": "ppppppppppppp\r\np\r\np\r\np\r\np",
+        "doctor": "doc aaa",
+        "date": "2017-06-07T00:45:56Z"
+    }
+},
+{
+    "model": "userprofile.medicalrecord",
+    "pk": 3,
+    "fields": {
+        "patient_id": 1,
+        "created": "2017-06-07T03:07:17.442Z",
+        "created_by_id": 2,
+        "updated": "2017-06-07T03:07:17.442Z",
+        "updated_by_id": 2,
+        "active": true,
+        "inactive_by_id": 0,
+        "brief": "aaa",
+        "diagnosis": "bbb",
+        "prescription": "ccc",
+        "doctor": "ddd",
+        "date": "2017-06-07T03:07:12Z"
+    }
+},
+{
+    "model": "userprofile.medicalrecord",
+    "pk": 4,
+    "fields": {
+        "patient_id": 1,
+        "created": "2017-06-07T03:09:00.951Z",
+        "created_by_id": 2,
+        "updated": "2017-06-07T03:09:00.951Z",
+        "updated_by_id": 2,
+        "active": true,
+        "inactive_by_id": 0,
+        "brief": "bbb",
+        "diagnosis": "ccc",
+        "prescription": "ddd",
+        "doctor": "eee",
+        "date": "2017-06-07T03:08:56Z"
+    }
+},
+{
+    "model": "userprofile.medicalrecord",
+    "pk": 5,
+    "fields": {
+        "patient_id": 1,
+        "created": "2017-06-07T04:20:48.115Z",
+        "created_by_id": 2,
+        "updated": "2017-06-07T04:20:48.115Z",
+        "updated_by_id": 2,
+        "active": true,
+        "inactive_by_id": 0,
+        "brief": "bbbfff",
+        "diagnosis": "ccc",
+        "prescription": "ddd",
+        "doctor": "eee",
+        "date": "2017-06-07T04:20:41Z"
+    }
+},
+{
+    "model": "userprofile.visitrecord",
+    "pk": 1,
+    "fields": {
+        "visitor_id": 2,
+        "timestamp": "2017-06-07T04:20:48.127Z",
+        "visit_type": "create",
+        "record_id": 5,
+        "patient_id": 1
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$W2xz2aKQG9k6$n7N0eX0JnQomJGZzQmKFZ1d+INaoUqDpIhPd871MC9E=",
+        "last_login": "2017-06-08T09:47:15.402Z",
+        "is_superuser": false,
+        "username": "user1@host.com",
+        "first_name": "zxv",
+        "last_name": "qwer",
+        "email": "user1@host.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2017-06-06T07:49:48.869Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$ODqRcoRjUS7N$NM24LZOJqmWUCWQ3gCWLwwLZfuFAUV3QKX/C+sTZxMM=",
+        "last_login": "2017-06-07T04:20:32.732Z",
+        "is_superuser": false,
+        "username": "doc1@host.com",
+        "first_name": "aaaa",
+        "last_name": "bbbb",
+        "email": "doc1@host.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2017-06-06T08:17:30.127Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$VuZd3OoxAdD9$+jtD1EiVPRpw6XSCEU9K/nGzqpMiufgNW8j8uReRj9E=",
+        "last_login": "2017-06-08T09:57:58.693Z",
+        "is_superuser": true,
+        "username": "zhaow",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2017-06-07T00:34:27.444Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$TmmSAjD2DUV5$+X4PAaC9SyBKj9HDGqW+OaSep4lmhaYPUz7hjj0SdF4=",
+        "last_login": "2017-06-07T00:49:59.749Z",
+        "is_superuser": false,
+        "username": "user2@host.com",
+        "first_name": "aaa",
+        "last_name": "bbb",
+        "email": "user2@host.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2017-06-07T00:38:03.412Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 5,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$NMn4BQgKxObD$na5CeqClQMA/DdzKid/CJZ/m7ESG56kgeP7KjhasCC4=",
+        "last_login": "2017-06-07T00:38:30.180Z",
+        "is_superuser": false,
+        "username": "doc2@host.com",
+        "first_name": "aaa",
+        "last_name": "bbb",
+        "email": "doc2@host.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2017-06-07T00:38:30.092Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 6,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$5PoSLzThxlg4$JQd80GTI77HKeXumWwaK6M9Vlltn7iMWbTKX/p70zWA=",
+        "last_login": "2017-06-08T09:53:34.536Z",
+        "is_superuser": false,
+        "username": "user3@host.com",
+        "first_name": "user3ff",
+        "last_name": "user3bb",
+        "email": "user3@host.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2017-06-08T09:53:34.423Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 7,
+    "fields": {
+        "password": "pbkdf2_sha256$36000$AuHgoz5HUvgk$OtwGaLGTRQDYKfwR/YlumoTaOB/mGs5kwYWjXoiKEKk=",
+        "last_login": "2017-06-08T10:04:30.869Z",
+        "is_superuser": false,
+        "username": "doc3@host.com",
+        "first_name": "asdfzzxcv",
+        "last_name": "qwerasdf",
+        "email": "doc3@host.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2017-06-08T10:04:30.761Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "userprofile.userprofile",
+    "pk": 1,
+    "fields": {
+        "user": [
+            "user1@host.com"
+        ],
+        "active": true,
+        "is_patient": true,
+        "is_doctor": false,
+        "is_doctor_emergency": false,
+        "email": "user1@host.com",
+        "first_name": "zxv1",
+        "last_name": "qwer2",
+        "gender": "M",
+        "birthday": "2000-06-07",
+        "mobile": "1234567891",
+        "address": "aaaaaaaaaaa2",
+        "emergency_contact": "bbbbbbbbb3",
+        "emergency_number": "1234567894"
+    }
+},
+{
+    "model": "userprofile.userprofile",
+    "pk": 2,
+    "fields": {
+        "user": [
+            "doc1@host.com"
+        ],
+        "active": true,
+        "is_patient": false,
+        "is_doctor": true,
+        "is_doctor_emergency": false,
+        "email": "doc1@host.com",
+        "first_name": "aaaa",
+        "last_name": "bbbb",
+        "gender": "f",
+        "birthday": "2000-01-02",
+        "mobile": "1234567899",
+        "address": "xxxxxxxxxxxxx",
+        "emergency_contact": "",
+        "emergency_number": "0000000000"
+    }
+},
+{
+    "model": "userprofile.userprofile",
+    "pk": 3,
+    "fields": {
+        "user": [
+            "zhaow"
+        ],
+        "active": true,
+        "is_patient": false,
+        "is_doctor": false,
+        "is_doctor_emergency": false,
+        "email": "x",
+        "first_name": "",
+        "last_name": "",
+        "gender": "M",
+        "birthday": "2017-06-07",
+        "mobile": "0000000000",
+        "address": "",
+        "emergency_contact": "",
+        "emergency_number": "0000000000"
+    }
+},
+{
+    "model": "userprofile.userprofile",
+    "pk": 4,
+    "fields": {
+        "user": [
+            "user2@host.com"
+        ],
+        "active": true,
+        "is_patient": true,
+        "is_doctor": false,
+        "is_doctor_emergency": false,
+        "email": "user2@host.com",
+        "first_name": "aaa",
+        "last_name": "bbb",
+        "gender": "m",
+        "birthday": "2000-06-07",
+        "mobile": "1234567890",
+        "address": "zzzzzzzz",
+        "emergency_contact": "xxxxxxxxxxx",
+        "emergency_number": "1234567890"
+    }
+},
+{
+    "model": "userprofile.userprofile",
+    "pk": 5,
+    "fields": {
+        "user": [
+            "doc2@host.com"
+        ],
+        "active": true,
+        "is_patient": false,
+        "is_doctor": true,
+        "is_doctor_emergency": false,
+        "email": "doc2@host.com",
+        "first_name": "aaa",
+        "last_name": "bbb",
+        "gender": "m",
+        "birthday": "2000-06-07",
+        "mobile": "1234567890",
+        "address": "zzzzzzzzzzzzz",
+        "emergency_contact": "",
+        "emergency_number": "0000000000"
+    }
+},
+{
+    "model": "userprofile.userprofile",
+    "pk": 6,
+    "fields": {
+        "user": [
+            "user3@host.com"
+        ],
+        "active": true,
+        "is_patient": true,
+        "is_doctor": false,
+        "is_doctor_emergency": false,
+        "email": "user3@host.com",
+        "first_name": "user3ff",
+        "last_name": "user3bb",
+        "gender": "M",
+        "birthday": "2000-06-08",
+        "mobile": "1234567890",
+        "address": "asdfzxcv",
+        "emergency_contact": "qwer",
+        "emergency_number": "1234567890"
+    }
+},
+{
+    "model": "userprofile.userprofile",
+    "pk": 7,
+    "fields": {
+        "user": [
+            "doc3@host.com"
+        ],
+        "active": true,
+        "is_patient": false,
+        "is_doctor": true,
+        "is_doctor_emergency": false,
+        "email": "doc3@host.com",
+        "first_name": "asdfzzxcv",
+        "last_name": "qwerasdf",
+        "gender": "M",
+        "birthday": "2017-06-08",
+        "mobile": "1234567890",
+        "address": "zasdfqwer",
+        "emergency_contact": "",
+        "emergency_number": "0000000000"
+    }
+}
+]
