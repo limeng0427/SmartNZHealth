@@ -11,7 +11,7 @@ repositories {
 
 cucumber {
     formats = ['pretty', 'html:out']
-    tags = ['@Login']
+    tags = ['@Register']
 }
 
 

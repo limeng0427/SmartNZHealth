@@ -43,6 +43,9 @@ public class RegisterSteps {
     }
 
     private PatientRegisterInfo getRegisterInfoFromStringList(List<String> list) {
+        for (String s: list) {
+            System.out.println(s);
+        }
         return new PatientRegisterInfo(list.get(0), // email
                                 list.get(1), // password
                                 list.get(1), // confirm password

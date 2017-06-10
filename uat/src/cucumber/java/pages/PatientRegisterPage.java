@@ -64,7 +64,7 @@ public class PatientRegisterPage {
     }
 
     public boolean registerSucceeds() {
-        WebDriverWait wait = new WebDriverWait(driver, 500);
+        WebDriverWait wait = new WebDriverWait(driver, 5);
         try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("register_successful_message")));
             return true;
@@ -76,17 +76,38 @@ public class PatientRegisterPage {
     public void register(PatientRegisterInfo registerInfo) {
         driver.get("http://127.0.0.1:15133/userprofile/register_patient/");
 
+        emailElement.clear();
         emailElement.sendKeys(registerInfo.getEmail());
+
+        passwordElement.clear();
         passwordElement.sendKeys(registerInfo.getPassword());
+
+        confirmPasswordElement.clear();
         confirmPasswordElement.sendKeys(registerInfo.getConfirmPassword());
+
+        firstNameElement.clear();
         firstNameElement.sendKeys(registerInfo.getFirstName());
+
+        lastNameElement.clear();
         lastNameElement.sendKeys(registerInfo.getLastName());
+
         new Select(genderElement).selectByVisibleText(registerInfo.getGender());
+
+        birthDateElement.clear();
         birthDateElement.sendKeys(registerInfo.getBirthDate());
+
+        mobileElement.clear();
         mobileElement.sendKeys(registerInfo.getMobile());
+
+        addressElement.clear();
         addressElement.sendKeys(registerInfo.getAddress());
+
+        emergencyContactNameElement.clear();
         emergencyContactNameElement.sendKeys(registerInfo.getEmergencyContactPerson());
+
+        emergencyContactPhoneElement.clear();
         emergencyContactPhoneElement.sendKeys(registerInfo.getEmergencyContactNumber());
+
 
         passwordElement.submit();
     }

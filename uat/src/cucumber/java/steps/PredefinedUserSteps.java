@@ -5,8 +5,6 @@ import java.util.List;
 import cucumber.api.DataTable;
 import cucumber.api.java.en.Given;
 import domain.PatientRegisterInfo;
-import service.DBUserDAO;
-import service.UserService;
 
 public class PredefinedUserSteps {
     @Given("^There are following patients in the system:$")
