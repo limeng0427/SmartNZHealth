@@ -62,28 +62,23 @@ def logout(request):
     return redirect('/')
 
 def register_patient(request):
-    if request.method == 'GET':
-        return render(request, 'register_patient.html', {'form':PatientRegistrationForm(), 'title':"Register Patient"})
-    form = PatientRegistrationForm(data=request.POST)
+    form = PatientRegistrationForm(request.POST or None)
     if form.is_valid():
         user = form.save(commit=True)
-        if user is None:
-            messages.error(request, 'duplicate username')
-            return render(request, 'register_patient.html', {'form':form, 'title':"Register Patient"})
-        user.save()
-        auth.login(request, user)
-        return redirect('/')
+        if user:
+            auth.login(request, user)
+            return redirect('/')
+        messages.error(request, 'duplicate username')
     return render(request, 'register_patient.html', {'form':form, 'title':"Register Patient"})
 
 def register_doctor(request):
-    if request.method == 'GET':
-        form = DoctorRegistrationForm()
-    else:
-        form = DoctorRegistrationForm(data=request.POST)
-        if form.is_valid():
-            user = form.save()
+    form = DoctorRegistrationForm(request.POST or None)
+    if form.is_valid():
+        user = form.save(commit=True)
+        if user:
             auth.login(request, user)
             return redirect('/')
+        messages.error(request, 'duplicate username')
     return render(request, 'register_doctor.html', {'form':form, 'title':"Register Doctor"})
 
 # https://simpleisbetterthancomplex.com/tips/2016/08/04/django-tip-9-password-change-form.html
