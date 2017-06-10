@@ -19,10 +19,6 @@ H1 {
     margin-bottom: 15px;
 }
 
-H2 {
-    clear: both;
-}
-
 a {
     color: #EE7D0C;
 }
@@ -30,6 +26,7 @@ a {
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
+    padding-top: 70px;
     padding-left: 15px;
     padding-right: 15px;
 }

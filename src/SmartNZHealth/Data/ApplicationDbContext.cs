@@ -15,6 +15,10 @@ namespace SmartNZHealth.Data
         {
         }
 
+        public ApplicationDbContext()
+        {
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -29,5 +33,11 @@ namespace SmartNZHealth.Data
         public DbSet<Case> Cases { get; set; }
         //public DbSet<ApplicationUser> ApplicationUser { get; set; }
         //public DbSet<PatientRecord> PatientRecords { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            //optionsBuilder.UseSqlite("Data Source = data.db");
+            optionsBuilder.UseSqlite("Data Source = ..\\..\\..\\data.db");
+        }
     }
 }

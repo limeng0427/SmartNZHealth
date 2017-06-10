@@ -30,6 +30,10 @@ namespace SmartNZHealth
                 // For more details on using the user secret store see http://go.microsoft.com/fwlink/?LinkID=532709
                 builder.AddUserSecrets();
             }
+            using (var client = new ApplicationDbContext())
+            {
+                client.Database.EnsureCreated();
+            }
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
@@ -40,11 +44,12 @@ namespace SmartNZHealth
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddEntityFrameworkSqlite().AddDbContext<ApplicationDbContext>();
             // Add framework services.
             //services.AddDbContext<HealthContext>(options =>
             //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseSQLite(Configuration.GetConnectionString("DefaultConnection")));
 
             //services.AddIdentity<ApplicationUser, IdentityRole>(config =>
             //{
