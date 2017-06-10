@@ -86,7 +86,9 @@
         <label class="col-md-2 control-label" for="Birthday">Birthday</label>
         <div class="col-md-10">
             <input class="form-control col-md-9" type="date" data-val="true" data-val-required="The Birthday field is required." 
-            id="Birthday" name="birthday" value="{{ form.birthday.value|date:"Y-m-d"  }}" /><span class="text-danger"> * </span>
+            id="Birthday" name="birthday" 
+            value='{% if "-" in form.birthday.value %}{{ form.birthday.value }}{% else %}{{ form.birthday.value|date:"Y-m-d" }}{% endif %}'
+            required/><span class="text-danger"> * </span>
             <span class="text-danger field-validation-valid" data-valmsg-for="Birthday" data-valmsg-replace="true"></span>
         </div>
     </div>
