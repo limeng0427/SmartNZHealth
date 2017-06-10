@@ -160,7 +160,7 @@ def rec_list(request):
     if search and len(search) > 0:
         data = data.filter(
             Q(brief__icontains=search)|
-            Q(diagnosis__icontains=search)|
+            # Q(diagnosis__icontains=search)|
             Q(prescription__icontains=search)
             ).distinct()
     if request.user.profile.is_doctor:
