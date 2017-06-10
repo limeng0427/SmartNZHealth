@@ -62,17 +62,16 @@ def logout(request):
     return redirect('/')
 
 def register_patient(request):
-    if request.method == 'GET':
-        return render(request, 'register_patient.html', {'form':PatientRegistrationForm(), 'title':"Register Patient"})
-    form = PatientRegistrationForm(data=request.POST)
+    # if request.method == 'GET':
+    #     return render(request, 'register_patient.html', {'form':PatientRegistrationForm(), 'title':"Register Patient"})
+    form = PatientRegistrationForm(request.POST or None)
     if form.is_valid():
         user = form.save(commit=True)
-        if user is None:
-            messages.error(request, 'duplicate username')
-            return render(request, 'register_patient.html', {'form':form, 'title':"Register Patient"})
-        user.save()
-        auth.login(request, user)
-        return redirect('/')
+        if user:
+            user.save()
+            auth.login(request, user)
+            return redirect('/')
+        messages.error(request, 'duplicate username')
     return render(request, 'register_patient.html', {'form':form, 'title':"Register Patient"})
 
 def register_doctor(request):

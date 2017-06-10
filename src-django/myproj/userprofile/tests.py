@@ -95,19 +95,23 @@ class RegisterPatientTest(TestCase):
     address = 'asfd123puqwpeor097z09xcv'
     emergency_contact = 'John Doe'
     emergency_number = '1234567890'
+    data = {'password1':password, 'password2':password,
+            'email':email, 'first_name': first_name, 'last_name':last_name, 
+            'gender':gender, 'birthday':birthday, 'mobile':mobile,
+            'address':address, 'emergency_contact':emergency_contact,
+            'emergency_number':emergency_number}
 
     def test_register_fail_wrongpass(self): # fail for password not match
-        form_data = {'username': self.username, 'password1':self.password, 'password2':self.passbad, 'email':self.email,
-                     'first_name': self.first_name, 'last_name':self.last_name, 'gender':self.gender, 'birthday':self.birthday,
-                     'mobile':self.mobile, 'address':self.address, 'emergency_contact':self.emergency_contact, 'emergency_number':self.emergency_number}
+        form_data = self.data.copy()
+        form_data['password2'] = self.passbad
         response = self.client.post(self.url, form_data, follow=True)
+        # print(str(response.content))
+        self.assertTrue(response.content.find(b"password fields didn&#39;t match.") >= 0)
         user = response.context['user']
         self.assertFalse(user.is_authenticated)
 
     def test_register_ok(self):
-        form_data = {'username': self.username, 'password1':self.password, 'password2':self.password, 'email':self.email,
-                     'first_name': self.first_name, 'last_name':self.last_name, 'gender':self.gender, 'birthday':self.birthday,
-                     'mobile':self.mobile, 'address':self.address, 'emergency_contact':self.emergency_contact, 'emergency_number':self.emergency_number}
+        form_data = self.data
         response = self.client.post(self.url, form_data, follow=True)
         user = response.context['user']
         self.assertTrue(user.is_authenticated)
@@ -119,12 +123,20 @@ class RegisterPatientTest(TestCase):
     def test_register_fail_dupname(self):   # fail for duplicate name
         self.test_register_ok()
         self.client.logout()
-        form_data = {'username': self.username, 'password1':self.password, 'password2':self.password, 'email':self.email,
-                     'first_name': self.first_name, 'last_name':self.last_name, 'gender':self.gender, 'birthday':self.birthday,
-                     'mobile':self.mobile, 'address':self.address, 'emergency_contact':self.emergency_contact, 'emergency_number':self.emergency_number}
+        form_data = self.data
         response = self.client.post(self.url, form_data, follow=True)
         user = response.context['user']
         self.assertFalse(user.is_authenticated)
+        self.assertTrue(response.content.find(b"duplicate username") >= 0)
+
+    def test_register_miss_one(self):
+        for k in self.data:
+            form_data = self.data.copy()
+            del form_data[k]
+            response = self.client.post(self.url, form_data, follow=True)
+            user = response.context['user']
+            self.assertFalse(user.is_authenticated)
+            self.assertTrue(response.content.find(b"This field is required") >= 0)
 
 
 # class UserProfileTest(TestCase):
