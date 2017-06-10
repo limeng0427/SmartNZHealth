@@ -1,7 +1,5 @@
 package pages;
 
-import java.util.List;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -12,9 +10,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import domain.RegisterInfo;
+import domain.PatientRegisterInfo;
 
-public class RegisterPage {
+public class PatientRegisterPage {
     @FindBy(id = "Email")
     public WebElement emailElement;
 
@@ -39,6 +37,9 @@ public class RegisterPage {
     @FindBy(id = "Mobile")
     public WebElement mobileElement;
 
+    @FindBy(id = "Address")
+    public WebElement addressElement;
+
     @FindBy(id = "EmergencyContactName")
     public WebElement emergencyContactNameElement;
 
@@ -47,23 +48,15 @@ public class RegisterPage {
 
     private final WebDriver driver;
 
-    public RegisterPage(WebDriver driver) {
+    public PatientRegisterPage(WebDriver driver) {
         this.driver = driver;
         PageFactory.initElements(driver, this);
-    }
-
-    public void register(String email, String password, String confirmPassword) {
-        driver.get("http://localhost:8080/cloudproject/register");
-        emailElement.sendKeys(email);
-        passwordElement.sendKeys(password);
-        confirmPasswordElement.sendKeys(confirmPassword);
-        passwordElement.submit();
     }
 
     public boolean errorMessageExists() {
         WebDriverWait wait = new WebDriverWait(driver, 5);
         try {
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("validation-summary-errors")));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("error")));
             return true;
         } catch (TimeoutException e) {
             return false;
@@ -71,7 +64,7 @@ public class RegisterPage {
     }
 
     public boolean registerSucceeds() {
-        WebDriverWait wait = new WebDriverWait(driver, 5);
+        WebDriverWait wait = new WebDriverWait(driver, 500);
         try {
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("register_successful_message")));
             return true;
@@ -80,8 +73,8 @@ public class RegisterPage {
         }
     }
 
-    public void register(RegisterInfo registerInfo) {
-        driver.get("http://dochyper.unitec.ac.nz/lim92/asp_practical/Patient/Register");
+    public void register(PatientRegisterInfo registerInfo) {
+        driver.get("http://127.0.0.1:15133/userprofile/register_patient/");
 
         emailElement.sendKeys(registerInfo.getEmail());
         passwordElement.sendKeys(registerInfo.getPassword());
@@ -91,6 +84,7 @@ public class RegisterPage {
         new Select(genderElement).selectByVisibleText(registerInfo.getGender());
         birthDateElement.sendKeys(registerInfo.getBirthDate());
         mobileElement.sendKeys(registerInfo.getMobile());
+        addressElement.sendKeys(registerInfo.getAddress());
         emergencyContactNameElement.sendKeys(registerInfo.getEmergencyContactPerson());
         emergencyContactPhoneElement.sendKeys(registerInfo.getEmergencyContactNumber());
 

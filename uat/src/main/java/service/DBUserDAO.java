@@ -17,25 +17,26 @@ public class DBUserDAO implements UserDAO {
     private static final Log logger =
             LogFactory.getLog(DBUserDAO.class);
 
-    private static final String INSERT_PRODUCT_SQL = "INSERT INTO users "
+    private static final String INSERT_PRODUCT_SQL = "INSERT INTO userprofile_userprofile "
             + "(email, password) " + "VALUES (?, ?)";
-    private static final String GET_USERS_SQL = "SELECT email, password FROM users";
-    private static final String GET_USER_SQL = "SELECT email, password FROM users WHERE email = ?";
-    private static final String DELETE_ALL_USERS_SQL ="DELETE FROM users";
+    private static final String GET_USERS_SQL = "SELECT email, password FROM userprofile_userprofile";
+    private static final String GET_USER_SQL = "SELECT * FROM userprofile_userprofile WHERE email = ?";
+    private static final String DELETE_ALL_USERS_SQL ="DELETE FROM userprofile_userprofile";
 
-    private static final String dbUrl = "jdbc:mysql://localhost:3306/smart_nz_health";
+    private static final String dbUrl = "jdbc:sqlite:../src-django/myproj/db.sqlite3";
 
 
 
     private Connection getConnection() {
         try {
-            Class.forName("com.mysql.jdbc.Driver");
+            System.out.println("home: " + System.getProperty("user.dir"));
+            Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
 
         try {
-            return DriverManager.getConnection(dbUrl, "root", "amc2");
+            return DriverManager.getConnection(dbUrl);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

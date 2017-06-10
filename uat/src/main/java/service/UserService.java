@@ -3,7 +3,7 @@ package service;
 import java.util.List;
 
 import domain.LoginInfo;
-import domain.RegisterInfo;
+import domain.PatientRegisterInfo;
 import domain.User;
 
 public final class UserService {
@@ -13,7 +13,7 @@ public final class UserService {
         this.userDao = userDao;
     }
 
-    public void register(RegisterInfo registerInfo) throws RegisterException {
+    public void registerPatient(PatientRegisterInfo registerInfo) throws RegisterException {
         String email = registerInfo.getEmail();
 
         User user = userDao.getUser(email);

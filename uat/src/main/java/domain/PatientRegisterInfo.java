@@ -1,7 +1,7 @@
 package domain;
 
 
-public class RegisterInfo {
+public class PatientRegisterInfo {
 
     private final String email;
     private final String password;
@@ -11,12 +11,13 @@ public class RegisterInfo {
     private final String gender;
     private final String birthDate;
     private final String mobile;
+    private final String address;
     private final String emergencyContactNumber;
     private final String emergencyContactPerson;
 
-    public RegisterInfo(String email, String password, String confirmPassword,
+    public PatientRegisterInfo(String email, String password, String confirmPassword,
             String firstName, String lastName, String gender, String birthDate,
-            String mobile, String emergencyContactNumber,
+            String mobile, String address, String emergencyContactNumber,
             String emergencyContactPerson) {
         super();
         this.email = email;
@@ -27,6 +28,7 @@ public class RegisterInfo {
         this.gender = gender;
         this.birthDate = birthDate;
         this.mobile = mobile;
+        this.address = address;
         this.emergencyContactNumber = emergencyContactNumber;
         this.emergencyContactPerson = emergencyContactPerson;
     }
@@ -69,6 +71,10 @@ public class RegisterInfo {
 
     public String getEmergencyContactPerson() {
         return emergencyContactPerson;
+    }
+
+    public String getAddress() {
+        return address;
     }
 
 }
