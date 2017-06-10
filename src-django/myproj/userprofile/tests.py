@@ -97,8 +97,25 @@ class DoctorRegistrationFormTest(TestCase):
         form = DoctorRegistrationForm(data=form_data)
         self.assertFalse(form.is_valid())
 
-class RegisterPatientTest(PatientRegistrationFormTest):
+class RegisterPatientTest(TestCase):
     url = reverse("userprofile:register_patient")
+    username = 'testregister@host.tld'
+    password = 'temporary'
+    passbad  = 'asdf'
+    email = username
+    first_name = 'first name'
+    last_name = 'last_name'
+    gender = 'M'
+    birthday = '2000-01-02'
+    mobile = '1234567890'
+    address = 'asfd123puqwpeor097z09xcv'
+    emergency_contact = 'John Doe'
+    emergency_number = '1234567890'
+    data = {'password1':password, 'password2':password,
+            'email':email, 'first_name': first_name, 'last_name':last_name, 
+            'gender':gender, 'birthday':birthday, 'mobile':mobile,
+            'address':address, 'emergency_contact':emergency_contact,
+            'emergency_number':emergency_number}
     def test_register_fail_wrongpass(self): # fail for password not match
         form_data = self.data.copy()
         form_data['password2'] = self.passbad
@@ -135,8 +152,20 @@ class RegisterPatientTest(PatientRegistrationFormTest):
             self.assertFalse(user.is_authenticated)
             self.assertTrue(response.content.find(b"This field is required") >= 0)
 
-class RegisterDoctorTest(DoctorRegistrationFormTest):
+class RegisterDoctorTest(TestCase):
     url = reverse("userprofile:register_doctor")
+    username = 'testregister@host.tld'
+    password = 'temporary'
+    passbad = 'asdf'
+    email = username
+    first_name = 'first name'
+    last_name = 'last_name'
+    gender = 'M'
+    mobile = '1234567890'
+    address = 'asfd123puqwpeor097z09xcv'
+    data = {'password1':password, 'password2':password, 'email':email,
+            'first_name':first_name, 'last_name':last_name, 'gender':gender, 
+            'mobile':mobile, 'address':address,}
     def test_register_fail_wrongpass(self): # fail for password not match
         form_data = self.data.copy()
         form_data['password2'] = self.passbad
@@ -173,25 +202,84 @@ class RegisterDoctorTest(DoctorRegistrationFormTest):
             self.assertFalse(user.is_authenticated)
             self.assertTrue(response.content.find(b"This field is required") >= 0)
 
-# class UserProfileTest(TestCase):
-#     username = 'testregister@host.tld'
-#     password = 'temporary'
-#     passbad  = 'asdf'
-#     email = username
-#     first_name = 'first name'
-#     last_name = 'last_name'
-#     gender = 'M'
-#     birthday = '2000-01-02'
-#     mobile = '1234567890'
-#     address = 'asfd123puqwpeor097z09xcv'
-#     emergency_contact = 'John Doe'
-#     emergency_number = '1234567890'
-#     def test_update(self):
-#         # create a user
-#         user = User.objects.create_user(self.username, password=self.password)
-#         self.client.login(username=self.username, password=self.password)
-#         form_data = {'attr1':True, 'attr2':'bbb'}
-#         response = self.client.post(reverse('userprofile:profile'), form_data, follow=True)
-#         profile = user.profile
-#         self.assertEqual(profile.attr1, form_data['attr1'])
-#         self.assertEqual(profile.attr2, form_data['attr2'])
+class PatientProfileFormTest(TestCase):
+    # ['first_name', 'last_name', \
+    #         'gender', 'birthday', 'mobile', 'address', 'emergency_contact', 'emergency_number']
+    url = reverse('userprofile:profile')
+    username = 'testregister@host.tld'
+    password = 'temporary'
+    passbad  = 'asdf'
+    email = username
+    first_name = 'first name'
+    last_name = 'last_name'
+    gender = 'M'
+    birthday = '2000-01-02'
+    mobile = '1234567890'
+    address = 'asfd123puqwpeor097z09xcv'
+    emergency_contact = 'John Doe'
+    emergency_number = '1234567890'
+    data = {'password1':password, 'password2':password,
+            'email':email, 'first_name': first_name, 'last_name':last_name, 
+            'gender':gender, 'birthday':birthday, 'mobile':mobile,
+            'address':address, 'emergency_contact':emergency_contact,
+            'emergency_number':emergency_number}
+    def setUp(self):
+        form_data = self.data
+        response = self.client.post(reverse("userprofile:register_patient"),
+                                    form_data, follow=True)
+        user = response.context['user']
+        self.assertTrue(user.is_authenticated)
+        self.assertTrue(user.profile.is_patient)
+        self.assertEqual(user.username, self.username)
+
+    def test_form(self):
+        form = PatientProfileForm(self.data)
+        self.assertTrue(form.is_valid())
+
+    def test_update(self):
+        address2 = 'new address'
+        form_data = self.data.copy()
+        form_data['address'] = address2
+        response = self.client.post(self.url, form_data, follow=True)
+        user = User.objects.get(username=self.username)
+        self.assertTrue(user.profile.is_patient)
+        self.assertEqual(user.profile.address, address2)
+
+class DoctorProfileFormTest(TestCase):
+    # ['first_name', 'last_name', \
+    #         'gender', 'mobile', 'address']  # 'birthday',
+    url = reverse('userprofile:profile')
+    username = 'testregister@host.tld'
+    password = 'temporary'
+    passbad = 'asdf'
+    email = username
+    first_name = 'first name'
+    last_name = 'last_name'
+    gender = 'M'
+    mobile = '1234567890'
+    address = 'asfd123puqwpeor097z09xcv'
+    data = {'password1':password, 'password2':password, 'email':email,
+            'first_name':first_name, 'last_name':last_name, 'gender':gender, 
+            'mobile':mobile, 'address':address,}
+    def setUp(self):
+        form_data = self.data
+        response = self.client.post(reverse("userprofile:register_doctor"),
+                                    form_data, follow=True)
+        user = response.context['user']
+        self.assertTrue(user.is_authenticated)
+        self.assertTrue(user.profile.is_doctor)
+        self.assertEqual(user.username, self.username)
+
+    def test_form(self):
+        form = DoctorProfileForm(self.data)
+        self.assertTrue(form.is_valid())
+
+    def test_update(self):
+        address2 = 'new address'
+        form_data = self.data.copy()
+        form_data['address'] = address2
+        response = self.client.post(self.url, form_data, follow=True)
+        user = User.objects.get(username=self.username)
+        self.assertTrue(user.profile.is_doctor)
+        self.assertEqual(user.profile.address, address2)
+

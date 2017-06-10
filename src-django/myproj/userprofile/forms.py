@@ -83,6 +83,8 @@ class DoctorRegistrationForm(UserCreationForm):
         # profile.birthday = self.cleaned_data['birthday']
         profile.mobile = self.cleaned_data['mobile']
         profile.address = self.cleaned_data['address']
+        profile.emergency_contact = ''
+        profile.emergency_number = ''
         profile.is_doctor = True
         if commit:
             user.save()

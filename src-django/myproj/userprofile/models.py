@@ -12,9 +12,9 @@ class UserProfile(models.Model):
     is_doctor = models.BooleanField(default=False)
     is_doctor_emergency = models.BooleanField(default=False)
     # use local email, first_name, last_name
-    email = models.EmailField(blank=False, default='x')
-    first_name = models.CharField(max_length=50, blank=False, default='')
-    last_name = models.CharField(max_length=50, blank=False, default='')
+    email = models.EmailField(blank=False)
+    first_name = models.CharField(max_length=50, blank=False)
+    last_name = models.CharField(max_length=50, blank=False)
     GENDER_CHOICES = (
         ('M', 'Male'),
         ('F', 'Female'),
@@ -25,12 +25,12 @@ class UserProfile(models.Model):
     phone_regex = RegexValidator(regex=r'^\+?\d{9,15}$',
                                  message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
     mobile = models.CharField(max_length=16, validators=[phone_regex],
-                              blank=False, default='0000000000')
+                              blank=False)
     # validators should be a list
-    address = models.CharField(max_length=250, blank=True)
-    emergency_contact = models.CharField(max_length=100, default='')
+    address = models.CharField(max_length=250, blank=False)
+    emergency_contact = models.CharField(max_length=100, blank=False)
     emergency_number = models.CharField(max_length=16, validators=[phone_regex],
-                                        blank=False, default='0000000000')
+                                        blank=False)
 
 User.profile = property(lambda u: UserProfile.objects.get_or_create(user=u)[0])
 

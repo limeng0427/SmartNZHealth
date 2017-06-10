@@ -14,19 +14,15 @@ from django.db.models import Q
 # Create your views here.
 @login_required
 def user_profile(request):
-    if request.method == 'GET':
-        if request.user.profile.is_patient:
-            form = PatientProfileForm(instance=request.user.profile)
-        else:
-            form = DoctorProfileForm(instance=request.user.profile)
+    if request.user.profile.is_patient:
+        form = PatientProfileForm(request.POST or None, instance=request.user.profile)
+    elif request.user.profile.is_doctor:
+        form = DoctorProfileForm(request.POST or None, instance=request.user.profile)
     else:
-        if request.user.profile.is_patient:
-            form = PatientProfileForm(data=request.POST, instance=request.user.profile)
-        else:
-            form = DoctorProfileForm(data=request.POST, instance=request.user.profile)
-        if form.is_valid():
-            form.save()
-            return redirect('/')
+        return redirect('/')
+    if form.is_valid():
+        form.save()
+        return redirect('/')
     return render(request, 'profile.html', {'form':form, 'title':'Profile'})
 
 def home(request):
@@ -176,17 +172,15 @@ def rec_delete(request):
 
 @login_required
 def set_patient(request):
-    if request.method == 'GET':
-        return render(request, 'form.html', {'form':SetPatientForm(), 'submit':'Set', 'title':'Set Patient'})
-    else:
-        form = SetPatientForm(request.POST)
-        if form.is_valid():
-            #print('patient=', form.cleaned_data['patient'], type(form.cleaned_data['patient']))
-            patient = get_object_or_404(User, username=form.cleaned_data['patient'])
-            if not patient.profile.is_patient:
-                raise Http404
-            request.session['patient'] = patient.username
+    form = SetPatientForm(request.POST or None)
+    if form.is_valid():
+        #print('patient=', form.cleaned_data['patient'], type(form.cleaned_data['patient']))
+        patient = get_object_or_404(User, username=form.cleaned_data['patient'])
+        if not patient.profile.is_patient:
+            raise Http404
+        request.session['patient'] = patient.username
         return redirect('/')
+    return render(request, 'set_patient.html', {'form':form, 'submit':'Set', 'title':'Set Patient'})
 
 @login_required
 def visit_list(request):

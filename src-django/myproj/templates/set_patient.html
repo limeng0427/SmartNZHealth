@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<h2>Set Patient</h2>
+
+<form method="post" class="form-horizontal" action=""> {% csrf_token %}
+    <hr />
+    <div class="text-danger validation-summary-valid" data-valmsg-summary="true"><ul><li style="display:none"></li>
+</ul></div>
+    <div class="form-group">
+        {{ form.patient.errors }}
+        <label class="col-md-2 control-label" for="patient">Patient</label>
+        <div class="col-md-10">
+            <input class="form-control col-md-9" type="text"
+            data-val-required="This field is required." 
+            id="patient" name="patient" value="{{ form.patient.value|default:'' }}" /><span class="text-danger"> * </span>
+            <span class="text-danger field-validation-valid" data-valmsg-for="patient" data-valmsg-replace="true"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-default">Set</button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}
