@@ -303,15 +303,16 @@ DIV.form_bas {
     vertical-align: middle;
 }
 
-#head .zone_menu ul.menu li {
-    display: inline-block;
-    float: left;
-    border-left: 3px solid #FFF;
-    background-color: #f29208;
-    background: url(../images/skin_fond_menu.png) repeat-x;
-    text-align: center;
-    vertical-align: middle;
-}
+    #head .zone_menu ul.menu li {
+        display: inline-block;
+        float: left;
+        border-left: 3px solid #FFF;
+        background-color: #f29208;
+        /*background: url(..\\..\\..\\wwwroot\\images\\skin_fond_menu.png) repeat-x;*/
+        /*background: url(../images/skin_fond_menu.png) repeat-x;*/
+        text-align: center;
+        vertical-align: middle;
+    }
 
 #head .zone_menu ul.menu li a {
     display: inline-block;
