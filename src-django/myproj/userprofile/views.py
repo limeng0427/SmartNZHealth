@@ -12,7 +12,7 @@ from django.db.models import Q
 
 
 # Create your views here.
-@login_required
+@login_required(login_url='/userprofile/login')
 def user_profile(request):
     if request.user.profile.is_patient:
         form = PatientProfileForm(request.POST or None, instance=request.user.profile)
@@ -33,6 +33,7 @@ def contact(request):
     # get groups for test
     return render(request, 'contact.html', {'title':"Contact"})
 
+@login_required(login_url='/userprofile/login')
 def forgot_password(request):
     # get groups for test
     return render(request, 'home.html', {'title':"Reset Password"})
@@ -45,8 +46,8 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user is not None:
             auth.login(request, user)
-            for g in user.groups.all():
-                print(g, type(g))
+            # for g in user.groups.all():
+            #     print(g, type(g))
             return redirect('/')
         messages.error(request, 'Invalid username or password')
     return render(request, 'login.html', {'title':"Login"})
@@ -104,7 +105,7 @@ def doctor_get_patient_in_session(request):
     # security check
     return patient
 
-@login_required
+@login_required(login_url='/userprofile/login')
 def rec_create(request):
     patient = doctor_get_patient_in_session(request)
     if patient is None:
@@ -126,7 +127,7 @@ def rec_create(request):
             return render(request, 'record_detail.html', {'rec':rec, 'patient':patient, 'title':"Create Record"})
     return redirect('/')
 
-@login_required
+@login_required(login_url='/userprofile/login')
 def rec_detail(request, rec_id):
     rec = get_object_or_404(MedicalRecord, id=rec_id)
     patient = get_object_or_404(User, id=rec.patient_id)
@@ -162,15 +163,15 @@ def rec_list(request):
                                     patient_id=patient.id)
     return render(request, 'record_list.html', {'data':data, 'patient':patient, 'title':"List Records"})
 
-@login_required
+@login_required(login_url='/userprofile/login')
 def rec_update(request):
     pass
 
-@login_required
+@login_required(login_url='/userprofile/login')
 def rec_delete(request):
     pass
 
-@login_required
+@login_required(login_url='/userprofile/login')
 def set_patient(request):
     form = SetPatientForm(request.POST or None)
     if form.is_valid():
@@ -182,7 +183,7 @@ def set_patient(request):
         return redirect('/')
     return render(request, 'set_patient.html', {'form':form, 'submit':'Set', 'title':'Set Patient'})
 
-@login_required
+@login_required(login_url='/userprofile/login')
 def visit_list(request):
     if request.user.profile.is_patient: # patient can list his own records
         data = VisitRecord.objects.filter(patient_id=request.user.id)
